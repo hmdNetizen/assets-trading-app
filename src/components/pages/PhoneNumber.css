@@ -1,0 +1,22 @@
+.react-tel-input .country-list .country {
+  text-align: left;
+}
+
+.react-tel-input .country-list .country-name {
+  color: #6b6b6b;
+}
+
+.react-tel-input .country-list .country-name:hover,
+.react-tel-input .country-list .country .dial-code:hover {
+  background: transparent;
+}
+
+.react-tel-input .form-control {
+  height: 48px;
+  width: 100%;
+}
+
+.react-tel-input .country-list .search-box:hover {
+  background: #fff;
+  color: #6b6b6b;
+}
