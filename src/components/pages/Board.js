@@ -5,59 +5,41 @@ import SubSidebar from "../layouts/SubSidebar";
 import Orders from "../utils/Orders";
 import TradingViewWidget, { Themes } from "react-tradingview-widget";
 import BuyStockModal from "../utils/modals/trading/BuyStock";
-import { message } from "antd";
 import { useActions } from "../hooks/useActions";
 import SellStockModal from "../utils/modals/trading/SellStock";
-import { getPandL } from "../../helpers/getProfitOrLoss";
+// import { getPandL } from "../../helpers/getProfitOrLoss";
 import { getAssetRate, getAssetInfo } from "../../helpers/getAssetDetails";
 
 const Board = (props) => {
   const [sellStock, setSellStock] = useState(false);
   const [disableTakeProfit, setDisableTakeProfit] = useState(true);
   const [disableStopLoss, setDisableStopLoss] = useState(true);
-  const [profitAmount, setProfitAmount] = useState("");
-  const [stopLossAmount, setStopLossAmount] = useState("");
+  const [profitAmount, setProfitAmount] = useState(0);
+  const [stopLossAmount, setStopLossAmount] = useState(0);
   const [buyStock, setBuyStock] = useState(false);
 
   const { setLevIsh, levIsh, buysell, setBuysell, data } = props;
 
   const { user, loading } = useSelector((state) => state.auth);
-  const { userMargin, openTrades } = useSelector((state) => state.profile);
-  const {
-    currentSelectedStock,
-    defaultStockAsset,
-    allStockAssets,
-    stocksSelected,
-  } = useSelector((state) => state.stock);
+  const { userMargin } = useSelector((state) => state.profile);
+  const { currentSelectedStock, defaultStockAsset, stocksSelected } =
+    useSelector((state) => state.stock);
 
   // Action creators
   const { setUserMargin } = useActions();
 
-  const profitOrLoss = getPandL(
-    openTrades,
-    allStockAssets,
-    data?.leverageAmount
-  );
+  // const profitOrLoss = getPandL(
+  //   openTrades,
+  //   allStockAssets,
+  //   data?.leverageAmount
+  // );
 
-  // const getRate = () => {
-  //   if (Object.keys(defaultStockAsset).length > 0) {
-  //     return (
-  //       (userMargin / defaultStockAsset.rate) *
-  //       (data && data.leverageAmount)
-  //     )
-  //       .toString()
-  //       .slice(0, 8);
-  //   } else {
-  //     return (
-  //       (userMargin / currentSelectedStock.rate) *
-  //       (data && data.leverageAmount)
-  //     )
-  //       .toString()
-  //       .slice(0, 8);
-  //   }
-  // };
+  const handleOpenBuyStock = () => {
+    setBuyStock(true);
+    setSellStock(false);
+  };
 
-  // const handleOpenBuyStock = () => {
+  // const handleOpenSellStock = () => {
   //   if (user && user.autoTrade) {
   //     message.warning(
   //       `AutoCopy Trader is Active, Turn off AutoCopy Trader to trade manually`
@@ -67,29 +49,14 @@ const Board = (props) => {
   //   } else if (user && !user.liveTrade) {
   //     message.warning("Live Trade is turned off. Contact Admin");
   //   } else {
-  //     setBuyStock(true);
-  //     setSellStock(false);
+  //     setSellStock(true);
+  //     setBuyStock(false);
   //   }
   // };
 
-  const handleOpenBuyStock = () => {
-    setBuyStock(true);
-    setSellStock(false);
-  };
-
   const handleOpenSellStock = () => {
-    if (user && user.autoTrade) {
-      message.warning(
-        `AutoCopy Trader is Active, Turn off AutoCopy Trader to trade manually`
-      );
-    } else if (user && (user.wallet <= 0 || userMargin > user.wallet)) {
-      message.warning(`You need to make a deposit to buy the stock`);
-    } else if (user && !user.liveTrade) {
-      message.warning("Live Trade is turned off. Contact Admin");
-    } else {
-      setSellStock(true);
-      setBuyStock(false);
-    }
+    setSellStock(true);
+    setBuyStock(false);
   };
 
   // A custom hook for rerendering the dashboard component after 10 secondays
@@ -105,7 +72,7 @@ const Board = (props) => {
           <div className="trade">
             <div className="dash-row">
               <div className="chart">
-                <div className="chartPandL">
+                {/* <div className="chartPandL">
                   <h2>
                     <span style={{ color: "#aaa", fontWeight: 300 }}>
                       P/L ={" "}
@@ -121,7 +88,7 @@ const Board = (props) => {
                         .slice(0, 9)}
                     </span>
                   </h2>
-                </div>
+                </div> */}
                 {/* TradingView Widget BEGIN */}
                 <div className="tradingview-widget-container">
                   <div id="tradingview_65e38" />
@@ -233,25 +200,24 @@ const Board = (props) => {
 
                 <div className="cad">
                   <span className="text">
-                    {
-                      getAssetInfo(
-                        stocksSelected,
-                        defaultStockAsset,
-                        currentSelectedStock
-                      ).sy
-                    }{" "}
+                    {!loading &&
+                    stocksSelected.length > 0 &&
+                    Object.keys(currentSelectedStock).length > 0
+                      ? currentSelectedStock.sy
+                      : defaultStockAsset.sy}{" "}
                     quantity
                   </span>
                   <span className="amount">
-                    {getAssetRate(
-                      stocksSelected,
-                      defaultStockAsset,
-                      currentSelectedStock,
-                      userMargin,
-                      data && data.leverageAmount
-                    )
-                      .toString()
-                      .slice(0, 8)}
+                    {!loading &&
+                      getAssetRate(
+                        stocksSelected,
+                        defaultStockAsset,
+                        currentSelectedStock,
+                        userMargin,
+                        data && data.leverageAmount
+                      )
+                        .toString()
+                        .slice(0, 8)}
                   </span>
                 </div>
                 {user &&

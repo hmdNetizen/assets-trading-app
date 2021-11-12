@@ -23,19 +23,17 @@ export const getAllUserTrades = () => async (dispatch) => {
 export const postUserTrade = (details) => async (dispatch) => {
   const config = {
     headers: {
-      "Content-Types": "application/json",
+      "Content-Type": "application/json",
     },
   };
 
   const body = JSON.stringify(details);
-
   try {
     const { data } = await axios.post(
-      `${BASE_URL}/api/v1/user/trades/store`,
+      `${BASE_URL_SECURED}/api/v1/user/trades/store`,
       body,
       config
     );
-
     dispatch({
       type: actionTypes.POST_TRADE,
       payload: data,

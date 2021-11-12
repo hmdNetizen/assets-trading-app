@@ -25,14 +25,18 @@ const BuyStockModal = (props) => {
   } = props;
 
   const { user } = useSelector((state) => state.auth);
-  const { stocksSelected, currentSelectedStock, defaultStockAsset } =
-    useSelector((state) => state.stock);
+  const {
+    stocksSelected,
+    currentSelectedStock,
+    defaultStockAsset,
+    allStockAssets,
+  } = useSelector((state) => state.stock);
   const { error, userMargin, activeTrade } = useSelector(
     (state) => state.profile
   );
   const { webData } = useSelector((state) => state.web);
 
-  const { purchaseStockAsset, setCurrentlyActiveTrade, setUserMargin } =
+  const { setCurrentlyActiveTrade, setUserMargin, postUserTrade } =
     useActions();
 
   // const openTradesMargin = tradesMargin(openTrades);
@@ -45,58 +49,56 @@ const BuyStockModal = (props) => {
     event.preventDefault();
     if (userMargin.toString().trim() === "" || parseFloat(userMargin) < 1) {
       message.error("Stock amount cannot be empty or zero");
-    } else if (userMargin > user.balance) {
-      message.error("You do not have enough money in your wallet");
     } else if (error) {
       message.error("Error processing your stock purchase");
     } else {
-      purchaseStockAsset(user._id, {
-        userId: user._id,
-        tag: "buy",
-        margin: parseFloat(userMargin),
-        stockAmount: getAssetRate(
-          stocksSelected,
-          defaultStockAsset,
-          currentSelectedStock,
-          parseFloat(userMargin),
-          webData && webData.leverageAmount
-        ),
-        nameOfAsset: getAssetInfo(
+      postUserTrade({
+        coinId: getAssetInfo(
           stocksSelected,
           defaultStockAsset,
           currentSelectedStock
-        ).sy,
-        typeOfAsset: getAssetInfo(
-          stocksSelected,
-          defaultStockAsset,
-          currentSelectedStock
-        ).type,
-        openRateOfAsset: getAssetInfo(
-          stocksSelected,
-          defaultStockAsset,
-          currentSelectedStock
-        ).rate,
-        closeRateOfAsset: 0,
-        takeProfit: profitAmount && parseFloat(profitAmount),
-        takeLoss: stopLossAmount && parseFloat(stopLossAmount),
-        profit: 0,
-        loss: 0,
+        ).id,
+        type: "buy",
+        // margin: parseFloat(userMargin),
+        amount: parseFloat(userMargin),
+        // getAssetRate(
+        //   stocksSelected,
+        //   defaultStockAsset,
+        //   currentSelectedStock,
+        //   parseFloat(userMargin),
+        //   webData && webData.leverageAmount
+        // ),
+        take_profit: profitAmount && parseFloat(profitAmount),
+        stop_loss: stopLossAmount && parseFloat(stopLossAmount),
+        is_take_profit: 0,
+        is_stop_loss: 0,
+        duration: 10,
       });
+
       message.success(
         ` ${
           getAssetInfo(stocksSelected, defaultStockAsset, currentSelectedStock)
             .sy
         } has been successfully purchased`
       );
-      animateBalance("balance", balance, balance - userMargin, 3000);
-      // getCurrentProfile(user && user._id)
+      animateBalance(
+        "balance",
+        balance,
+        balance - parseFloat(userMargin),
+        3000
+      );
       setCurrentlyActiveTrade(
-        Object.keys(currentSelectedStock).length > 0
-          ? { ...currentSelectedStock, margin: userMargin, tag: "buy" }
-          : { ...defaultStockAsset, margin: userMargin, tag: "buy" }
+        allStockAssets.length > 0 &&
+          Object.keys(currentSelectedStock).length > 0
+          ? {
+              ...currentSelectedStock,
+              margin: parseFloat(userMargin),
+              tag: "buy",
+            }
+          : { ...defaultStockAsset, margin: parseFloat(userMargin), tag: "buy" }
       );
       setBuysell(true);
-      setTimeout(() => setBuysell(false), 10000);
+      setTimeout(() => setBuysell(false), 5000);
     }
     setBuyStock(false);
     setUserMargin(1);
@@ -196,7 +198,7 @@ const BuyStockModal = (props) => {
                   checked={!disableTakeProfit}
                   onChange={() => {
                     setDisableTakeProfit((prev) => !prev);
-                    setProfitAmount("");
+                    setProfitAmount(0);
                   }}
                 />
                 <span className="slider round" />
@@ -235,7 +237,7 @@ const BuyStockModal = (props) => {
                   checked={!disableStopLoss}
                   onChange={() => {
                     setDisableStopLoss((prev) => !prev);
-                    setStopLossAmount("");
+                    setStopLossAmount(0);
                   }}
                 />
                 <span className="slider round" />

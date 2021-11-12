@@ -33,7 +33,7 @@ const SellStockModal = (props) => {
   const { webData } = useSelector((state) => state.web);
 
   // Action Creators
-  const { sellStockAsset, setCurrentlyActiveTrade, setUserMargin } =
+  const { setCurrentlyActiveTrade, setUserMargin, postUserTrade } =
     useActions();
 
   // const openTradesMargin = tradesMargin(openTrades);
@@ -52,37 +52,27 @@ const SellStockModal = (props) => {
     } else if (error) {
       message.error("Error processing your stock purchase");
     } else {
-      sellStockAsset(user._id, {
-        userId: user._id,
-        tag: "sell",
-        margin: parseFloat(userMargin),
-        stockAmount: getAssetRate(
-          stocksSelected,
-          defaultStockAsset,
-          currentSelectedStock,
-          parseFloat(userMargin),
-          webData && webData.leverageAmount
-        ),
-        nameOfAsset: getAssetInfo(
+      postUserTrade({
+        coinId: getAssetInfo(
           stocksSelected,
           defaultStockAsset,
           currentSelectedStock
-        ).sy,
-        typeOfAsset: getAssetInfo(
-          stocksSelected,
-          defaultStockAsset,
-          currentSelectedStock
-        ).type,
-        openRateOfAsset: getAssetInfo(
-          stocksSelected,
-          defaultStockAsset,
-          currentSelectedStock
-        ).rate,
-        closeRateOfAsset: 0,
-        takeProfit: profitAmount && parseFloat(profitAmount),
-        takeLoss: stopLossAmount && parseFloat(stopLossAmount),
-        profit: 0,
-        loss: 0,
+        ).id,
+        type: "sell",
+        // margin: parseFloat(userMargin),
+        amount: parseFloat(userMargin),
+        // getAssetRate(
+        //   stocksSelected,
+        //   defaultStockAsset,
+        //   currentSelectedStock,
+        //   parseFloat(userMargin),
+        //   webData && webData.leverageAmount
+        // ),
+        take_profit: profitAmount && parseFloat(profitAmount),
+        stop_loss: stopLossAmount && parseFloat(stopLossAmount),
+        is_take_profit: 0,
+        is_stop_loss: 0,
+        duration: 10,
       });
       message.success(
         `Your ${
@@ -135,7 +125,9 @@ const SellStockModal = (props) => {
               currentSelectedStock,
               parseFloat(userMargin),
               webData && webData.leverageAmount
-            )}{" "}
+            )
+              .toString()
+              .slice(0, 8)}{" "}
             {
               getAssetInfo(
                 stocksSelected,
@@ -195,7 +187,7 @@ const SellStockModal = (props) => {
                   checked={!disableTakeProfit}
                   onChange={() => {
                     setDisableTakeProfit((prev) => !prev);
-                    setProfitAmount("");
+                    setProfitAmount(0);
                   }}
                 />
                 <span className="slider round" />
@@ -234,7 +226,7 @@ const SellStockModal = (props) => {
                   checked={!disableStopLoss}
                   onChange={() => {
                     setDisableStopLoss((prev) => !prev);
-                    setStopLossAmount("");
+                    setStopLossAmount(0);
                   }}
                 />
                 <span className="slider round" />
@@ -269,7 +261,9 @@ const SellStockModal = (props) => {
               currentSelectedStock,
               parseFloat(userMargin),
               webData && webData.leverageAmount
-            )}{" "}
+            )
+              .toString()
+              .slice(0, 8)}{" "}
             {
               getAssetInfo(
                 stocksSelected,

@@ -274,10 +274,10 @@ const Orders = (props) => {
                                     marginRight: 20,
                                   }}
                                 >
-                                  {item.isOpen ? "Open" : "closed"}
+                                  {item.status === 0 ? "Open" : "closed"}
                                 </button>
 
-                                {item.isOpen && (
+                                {item.status === 0 && (
                                   <button
                                     className="orderBtn btn-red"
                                     onClick={() => {
