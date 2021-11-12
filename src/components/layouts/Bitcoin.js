@@ -1,13 +1,14 @@
-import { message } from "antd";
-import axios from "axios";
-import React, { useState } from "react";
-import { useSelector } from "react-redux";
-import getToken from "../../store/utils/gettoken";
-import { useActions } from "../hooks/useActions";
+import { message } from 'antd';
+import axios from 'axios';
+import React, {useState} from 'react'
+import { Spinner } from 'react-bootstrap';
+import { useSelector } from 'react-redux';
+import getToken from '../../store/utils/gettoken';
+import { useActions } from '../hooks/useActions';
 
 function Bitcoin() {
-  const { get_admin_data } = useActions();
-  const { adminData } = useSelector((state) => state.adminInfo);
+  const {change_admin_data, get_admin_data} = useActions();
+  const {adminData} = useSelector(state=> state.adminInfo); 
   const [loading, setLoading] = useState(false);
   const [paymentSuccessText, setpaymentSuccessText] = useState("");
   const [paymentRefPattern, setpaymentRefPattern] = useState("");
@@ -27,63 +28,67 @@ function Bitcoin() {
   const [imgLink1, setImgLink1] = useState("");
   const [imgLink2, setImgLink2] = useState("");
   const [imgLink3, setImgLink3] = useState("");
+   
+    useState(() => {
+      if (adminData) {
+        setpaymentSuccessText(adminData.paymentSuccessText);
+        setpaymentRefPattern(adminData.paymentRefPattern);
+        setpaymentNeedsApproval(adminData.paymentNeedsApproval);
+        setmasterCardStatus(adminData.masterCardStatus);
+        setbitCoinStatus(adminData.bitCoinStatus);
+        setbtcHeaderText(adminData.btcHeaderText);
+        setbtcAddress(adminData.btcAddress);
+        setbuyBTCLink(adminData.buyBTCLink);
+        setBTCAmount1(adminData.BTCAmount1);
+        setBTCAmount2(adminData.BTCAmount2);
+        setBTCAmount3(adminData.BTCAmount3);
+        setBTCQRCodeImg(adminData.BTCQRCodeImg);
+        setImg1(adminData.depositeImg1);
+        setImg2(adminData.depositeImg2);
+        setImg3(adminData.depositeImg3);
+        setImgLink1(adminData.depositeImg1Link);
+        setImgLink2(adminData.depositeImg2Link);
+        setImgLink3(adminData.depositeImg3Link);
+      }
+    }, []);
 
-  useState(() => {
-    if (adminData) {
-      setpaymentSuccessText(adminData.paymentSuccessText);
-      setpaymentRefPattern(adminData.paymentRefPattern);
-      setpaymentNeedsApproval(adminData.paymentNeedsApproval);
-      setmasterCardStatus(adminData.masterCardStatus);
-      setbitCoinStatus(adminData.bitCoinStatus);
-      setbtcHeaderText(adminData.btcHeaderText);
-      setbtcAddress(adminData.btcAddress);
-      setbuyBTCLink(adminData.buyBTCLink);
-      setBTCAmount1(adminData.BTCAmount1);
-      setBTCAmount2(adminData.BTCAmount2);
-      setBTCAmount3(adminData.BTCAmount3);
-      setBTCQRCodeImg(adminData.BTCQRCodeImg);
-      setImg1(adminData.depositeImg1);
-      setImg2(adminData.depositeImg2);
-      setImg3(adminData.depositeImg3);
-      setImgLink1(adminData.depositeImg1Link);
-      setImgLink2(adminData.depositeImg2Link);
-      setImgLink3(adminData.depositeImg3Link);
-    }
-  }, []);
+    
+    const dataAll = {
+      paymentSuccessText: paymentSuccessText,
+      paymentRefPattern: paymentRefPattern,
+      paymentNeedsApproval: paymentNeedsApproval,
+      masterCardStatus: masterCardStatus,
+      bitCoinStatus: bitCoinStatus,
+      buyBTCLink: buyBTCLink,
+      btcAddress: btcAddress,
+      btcHeaderText: btcHeaderText,
+      BTCAmount1: parseInt(BTCAmount1),
+      BTCAmount2: parseInt(BTCAmount2),
+      BTCAmount3: parseInt(BTCAmount3),
+      BTCQRCodeImg: BTCQRCodeImg,
+      depositeImg1: img1,
+      depositeImg2: img2,
+      depositeImg3: img3,
+      depositeImg1Link: imgLink1,
+      depositeImg2Link: imgLink2,
+      depositeImg3Link: imgLink3,
+    };
 
-  const dataAll = {
-    paymentSuccessText: paymentSuccessText,
-    paymentRefPattern: paymentRefPattern,
-    paymentNeedsApproval: paymentNeedsApproval,
-    masterCardStatus: masterCardStatus,
-    bitCoinStatus: bitCoinStatus,
-    buyBTCLink: buyBTCLink,
-    btcAddress: btcAddress,
-    btcHeaderText: btcHeaderText,
-    BTCAmount1: parseInt(BTCAmount1),
-    BTCAmount2: parseInt(BTCAmount2),
-    BTCAmount3: parseInt(BTCAmount3),
-    BTCQRCodeImg: BTCQRCodeImg,
-    depositeImg1: img1,
-    depositeImg2: img2,
-    depositeImg3: img3,
-    depositeImg1Link: imgLink1,
-    depositeImg2Link: imgLink2,
-    depositeImg3Link: imgLink3,
-  };
-
-  const handleImageChange = (e) => {
-    // console.log(e.target.files[])
-    e.preventDefault();
-    if (e) {
-      const reader = new FileReader();
-      reader.readAsDataURL(e.target.files[0]);
-      reader.onloadend = () => {
-        setBTCQRCodeImg(reader.result);
-        console.log(reader.result);
+    const handleImageChange = (e) => {
+        // console.log(e.target.files[])
+        e.preventDefault();
+        if (e) {
+          const reader = new FileReader();
+          reader.readAsDataURL(e.target.files[0]);
+          reader.onloadend = () => {
+            setBTCQRCodeImg(reader.result);
+            console.log(reader.result);
+          };
+        }
       };
-    }
-  };
+    
+
+
 
   const handleImageChange1 = (e) => {
     // console.log(e.target.files[])
@@ -119,58 +124,57 @@ function Bitcoin() {
         setImg3(reader3.result);
       };
     }
-  };
-  const url =
-    "https://trade-backend-daari.ondigitalocean.app/api/site/btcAdminSettings";
-  const onSaved = () => {
-    setLoading(true);
-    axios
-      .put(url, dataAll, getToken())
-      .then((res) => {
-        console.log(res.data);
-        setLoading(false);
-        message.success("Data Updated Successfully");
-        get_admin_data();
-      })
-      .catch((err) => {
-        message.error("Error occured while updataing");
-      });
-  };
-  return (
-    <div>
-      <div>
-        <div className="public-card">
-          <div className="each-row dash-row">
-            <div className="dtls">
-              <h4>Enable Bitcoin</h4>
-            </div>
-            <div className="actions switch-field">
-              <div className="switch-field-round">
-                <input
-                  type="radio"
-                  id="enable-payment-one"
-                  name="enable-payment"
-                  defaultValue="yes"
-                  onChange={(e) =>
-                    setbitCoinStatus(e.target.checked ? true : false)
-                  }
-                  checked={bitCoinStatus === true ? true : false}
-                />
-                <label htmlFor="enable-payment-one">ON</label>
-                <input
-                  type="radio"
-                  id="enable-payment-two"
-                  name="enable-payment"
-                  defaultValue="no"
-                  onChange={(e) =>
-                    setbitCoinStatus(e.target.checked ? false : true)
-                  }
-                  checked={bitCoinStatus === false ? true : false}
-                />
-                <label htmlFor="enable-payment-two">OFF</label>
-              </div>
-            </div>
-          </div>
+  }
+      const url = "https://trade-backend-daari.ondigitalocean.app/api/site/btcAdminSettings"
+      const onSaved = ()=>{
+        setLoading(true)
+        axios
+          .put(url, dataAll, getToken())
+          .then(res=> {
+            console.log(res.data)
+            setLoading(false)
+            message.success("Data Updated Successfully");
+            get_admin_data()
+          })
+          .catch(err=>{
+            message.error("Error occured while updataing")
+          })
+      }
+    return (
+        <div>
+                  <div>
+                  <div className="public-card">
+                    <div className="each-row dash-row">
+                      <div className="dtls">
+                        <h4>Enable Bitcoin</h4>
+                      </div>
+                      <div className="actions switch-field">
+                        <div className="switch-field-round">
+                          <input
+                            type="radio"
+                            id="enable-payment-one"
+                            name="enable-payment"
+                            defaultValue="yes"
+                            onChange={(e) =>
+                              setbitCoinStatus(e.target.checked ? true : false)
+                            }
+                            checked={bitCoinStatus === true ? true : false}
+                          />
+                          <label htmlFor="enable-payment-one">ON</label>
+                          <input
+                            type="radio"
+                            id="enable-payment-two"
+                            name="enable-payment"
+                            defaultValue="no"
+                            onChange={(e) =>
+                              setbitCoinStatus(e.target.checked ? false : true)
+                            }
+                            checked={bitCoinStatus === false ? true : false}
+                          />
+                          <label htmlFor="enable-payment-two">OFF</label>
+                        </div>
+                      </div>
+                    </div>
 
           <div className="each-row dash-row">
             <div className="dtls">
@@ -262,65 +266,66 @@ function Bitcoin() {
             </div>
           </div>
 
-          <div className="each-row dash-row">
-            <div className="dtls">
-              <h4>Upload Qr Code</h4>
-            </div>
-            <div className="actions">
-              <img src={BTCQRCodeImg} className="logo" alt="QR Code" />
-              <input
-                onChange={handleImageChange}
-                className="dash-input"
-                type="file"
-                name="text"
-              />
-            </div>
-          </div>
+                    <div className="each-row dash-row">
+                      <div className="dtls">
+                        <h4>Upload Qr Code</h4>
+                      </div>
+                      <div className="actions">
+                      <img src={BTCQRCodeImg} className="logo" />
+                        <input
+                          onChange={handleImageChange}
+                          className="dash-input"
+                          type="file"
+                          name="text"
+                        />
+                      </div>
+                    </div>
 
-          <div className="each-row dash-row">
-            <div className="dtls">
-              <h4>Upload Image 1</h4>
-            </div>
-            <div className="actions">
-              <img src={img1} className="logo" alt="" />
-              <input
-                onChange={handleImageChange1}
-                className="dash-input"
-                type="file"
-                name="img1"
-              />
-            </div>
-          </div>
+                    <div className="each-row dash-row">
+                      <div className="dtls">
+                        <h4>Upload Image 1</h4>
+                      </div>
+                      <div className="actions">
+                        <img src={img1} className="logo" />
+                        <input
+                          onChange={handleImageChange1}
+                          className="dash-input"
+                          type="file"
+                          name="img1"
+                        />
+                      </div>
+                    </div>
 
-          <div className="each-row dash-row">
-            <div className="dtls">
-              <h4>Image 1 Link</h4>
-            </div>
-            <div className="actions">
-              <input
-                value={imgLink1}
-                onChange={(e) => setImgLink1(e.target.value)}
-                className="dash-input"
-                type="text"
-                name="text"
-              />
-            </div>
-          </div>
+                    <div className="each-row dash-row">
+                      <div className="dtls">
+                        <h4>Image 1 Link</h4>
+                      </div>
+                      <div className="actions">
 
-          <div className="each-row dash-row">
-            <div className="dtls">
-              <h4>Upload Image 2</h4>
-            </div>
-            <div className="actions">
-              <img src={img2} className="logo" alt="" />
-              <input
-                onChange={handleImageChange2}
-                className="dash-input"
-                type="file"
-                name="img2"
-              />
-            </div>
-          </div>
+                        <input
+                          value={imgLink1}
+                          onChange={(e) => setImgLink1(e.target.value)}
+                          className="dash-input"
+                          type="text"
+                          name="text"
+                        />
+                      </div>
+                    </div>
+
+                    <div className="each-row dash-row">
+                      <div className="dtls">
+                        <h4>Upload Image 2</h4>
+                      </div>
+                      <div className="actions">
+                      <img src={img2} className="logo" />
+                        <input
+                          onChange={handleImageChange2}
+                          className="dash-input"
+                          type="file"
+                          name="img2"
+                        />
+                      </div>
+                    </div>
 
           <div className="each-row dash-row">
             <div className="dtls">
@@ -337,42 +342,43 @@ function Bitcoin() {
             </div>
           </div>
 
-          <div className="each-row dash-row">
-            <div className="dtls">
-              <h4>Upload Image 3</h4>
-            </div>
-            <div className="actions">
-              <img src={img3} className="logo" alt="" />
-              <input
-                onChange={handleImageChange3}
-                className="dash-input"
-                type="file"
-                name="img3"
-              />
-            </div>
-          </div>
-          <div className="each-row dash-row">
-            <div className="dtls">
-              <h4>Image 3 Link</h4>
-            </div>
-            <div className="actions">
-              <input
-                value={imgLink3}
-                onChange={(e) => setImgLink3(e.target.value)}
-                className="dash-input"
-                type="text"
-                name="text"
-              />
-            </div>
-          </div>
+                    <div className="each-row dash-row">
+                      <div className="dtls">
+                        <h4>Upload Image 3</h4>
+                      </div>
+                      <div className="actions">
+                      <img src={img3} className="logo" />
+                        <input
+                          onChange={handleImageChange3}
+                          className="dash-input"
+                          type="file"
+                          name="img3"
+                        />
+                      </div>
+                    </div>
+                    <div className="each-row dash-row">
+                      <div className="dtls">
+                        <h4>Image 3 Link</h4>
+                      </div>
+                      <div className="actions">
+                        <input
+                          value={imgLink3}
+                          onChange={(e) => setImgLink3(e.target.value)}
+                          className="dash-input"
+                          type="text"
+                          name="text"
+                        />
+                      </div>
+                    </div>
 
-          <div className="save-btn">
-            <button onClick={onSaved}>{loading ? "Saving..." : "Save"}</button>
-          </div>
-        </div>
-      </div>
-    </div>
-  );
+                    <div className="save-btn">
+                      <button onClick={onSaved}>{loading ? "Saving...":"Save"}</button>
+                    </div>
+                  </div>
+                </div>
+        </div>    
+  )
+  
 }
 
 export default Bitcoin;

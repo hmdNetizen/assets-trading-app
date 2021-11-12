@@ -1,59 +1,64 @@
-import React, { useState, useEffect } from "react";
-import { useSelector } from "react-redux";
-import "./AutoTrading.css";
-import { useActions } from "../hooks/useActions";
-import { Button, Spinner, Table } from "react-bootstrap";
-import EditAutoTrade from "./EditAutoTrade";
-import { message } from "antd";
+import React, { useState, useEffect } from 'react'
+import { useSelector } from 'react-redux'
+import './AutoTrading.css'
+import { useActions } from '../hooks/useActions'
+import SuccessModal from '../pages/Modals/SuccessModal'
+import { Alert, Button, Spinner, Table } from 'react-bootstrap'
+import EditTrade from './EditTrade'
+import { useHistory } from 'react-router-dom'
+import EditAutoTrade from './EditAutoTrade'
+import { message } from 'antd'
 function AutoTrading() {
   const { success, loading, trades, error } = useSelector(
-    (state) => state.adminData
-  );
-  const { add_auto_trade, get_all_auto_trades, delete_auto_trade } =
-    useActions();
+    (state) => state.adminData,
+  )
+  const {
+    add_auto_trade,
+    get_all_auto_trades,
+    get_specific_trade,
+    delete_auto_trade,
+  } = useActions()
   const [input, setInput] = useState({
-    userName: "",
+    userName: '',
     profitPercentage: null,
     subscriptionFee: null,
-  });
+  })
   const handleInput = (e) => {
-    setInput({ ...input, [e.target.name]: e.target.value });
-  };
+    setInput({ ...input, [e.target.name]: e.target.value })
+  }
   useEffect(() => {
-    get_all_auto_trades();
-
-    // eslint-disable-next-line
-  }, []);
+    get_all_auto_trades()
+  }, [])
 
   const handleSubmit = (e) => {
-    e.preventDefault();
+    e.preventDefault()
     const data = {
       userName: input.userName,
       subscriptionFee: input.subscriptionFee,
       profitPercentage: input.profitPercentage,
-    };
-    add_auto_trade(data);
+    }
+    add_auto_trade(data)
     setInput({
-      userName: "",
-      profitPercentage: "",
-      subscriptionFee: "",
-    });
+      userName: '',
+      profitPercentage: '',
+      subscriptionFee: '',
+    })
 
     if (success && success.length > 0)
-      message.success("Successfully added auto trade");
-    if (error && error.length > 0) message.error("error in updating");
-    get_all_auto_trades();
-  };
+      message.success('Successfully added auto trade')
+    if (error && error.length > 0) message.error('error in updating')
+    get_all_auto_trades()
+  }
 
   const handleDelete = (id) => {
-    if (window.confirm("Are you sure you want to delete this trade ??")) {
-      delete_auto_trade(id);
+    if (window.confirm('Are you sure you want to delete this trade ??')) {
+      delete_auto_trade(id)
     }
-    get_all_auto_trades();
+    get_all_auto_trades()
 
-    if (success && success.length > 0) message.success("Trade Deleted");
-    if (error && error.length > 0) message.error("error in deleting");
-  };
+    if (success && success.length > 0) message.success('Trade Deleted')
+    if (error && error.length > 0) message.error('error in deleting')
+  }
 
   return (
     <div classname="AutoTrading_Wrapper">
@@ -128,11 +133,11 @@ function AutoTrading() {
                     <td>{trade.userName}</td>
                     <td>{trade.profitPercentage}</td>
                     <td>{trade.subscriptionFee}</td>
-                    <td>{trade.date.split("T")[0]}</td>
+                    <td>{trade.date.split('T')[0]}</td>
                     <td>
                       <EditAutoTrade id={trade._id}>
                         <Button>Edit</Button>
-                      </EditAutoTrade>{" "}
+                      </EditAutoTrade>{' '}
                       <Button
                         variant="danger"
                         onClick={() => handleDelete(trade._id)}
@@ -148,7 +153,7 @@ function AutoTrading() {
         </div>
       </div>
     </div>
-  );
+  )
 }
 
-export default AutoTrading;
+export default AutoTrading

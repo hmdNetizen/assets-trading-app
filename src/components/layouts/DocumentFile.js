@@ -1,17 +1,17 @@
-import React, { useState } from "react";
-import styled from "styled-components";
-import { Container, Modal } from "react-bootstrap";
-import { useSelector } from "react-redux";
+import React, { useState } from 'react'
+import styled from 'styled-components'
+import { Container, Modal } from 'react-bootstrap'
+import { useSelector } from 'react-redux'
 
 const DocumentFile = () => {
-  const { singleUserVerifedDetails } = useSelector((state) => state.profile);
-  const { name, phoneNumber, address } = singleUserVerifedDetails;
+  const { singleUserVerifedDetails } = useSelector((state) => state.profile)
+  const { name, phoneNumber, address } = singleUserVerifedDetails
 
-  const [state, setstate] = useState(false);
+  const [state, setstate] = useState(false)
 
   return (
     <>
-      <a className="text primary" onClick={() => setstate(true)} href="#!">
+      <a className="text primary" onClick={() => setstate(true)}>
         View Details
       </a>
       {state ? (
@@ -42,10 +42,10 @@ const DocumentFile = () => {
         </Modal>
       ) : null}
     </>
-  );
-};
+  )
+}
 
-export default React.memo(DocumentFile);
+export default React.memo(DocumentFile)
 
 const TextHeader = styled.div`
   .text-container {
@@ -57,4 +57,4 @@ const TextHeader = styled.div`
     font-weight: 300;
     font-size: 1rem;
   }
-`;
+`

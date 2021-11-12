@@ -5,13 +5,11 @@ export const allTradesHeader = [
   {
     Header: "Ref",
     accessor: "_id",
-    // eslint-disable-next-line
     accessor: ({ _id }) => <p>{_id.slice(3, 8)}</p>,
   },
   {
     Header: "Active",
     accessor: "isOpen",
-    // eslint-disable-next-line
     accessor: ({ isOpen }) => (
       <p
         className={
@@ -28,7 +26,6 @@ export const allTradesHeader = [
   {
     Header: "type",
     accessor: "tag",
-    // eslint-disable-next-line
     accessor: ({ tag }) => (
       <p
         className={
@@ -48,7 +45,6 @@ export const allTradesHeader = [
   {
     Header: "Profit",
     accessor: "profit",
-    // eslint-disable-next-line
     accessor: ({ profit }) => (
       <p className={" text-center bg-success text-light"}>{profit}</p>
     ),
@@ -56,7 +52,6 @@ export const allTradesHeader = [
   {
     Header: "Loss",
     accessor: "loss",
-    // eslint-disable-next-line
     accessor: ({ loss }) => (
       <p className={" text-center bg-danger text-light"}>{loss}</p>
     ),
@@ -96,7 +91,7 @@ export const allTradesHeader = [
   {
     Header: "Action",
     accessor: "icon",
-    // eslint-disable-next-line
+
     accessor: ({
       _id,
       tag,

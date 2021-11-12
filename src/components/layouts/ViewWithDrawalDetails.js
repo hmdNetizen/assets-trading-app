@@ -1,22 +1,27 @@
-import { minutesToSeconds } from "date-fns";
-import React, { useState } from "react";
-import { Container, Modal } from "react-bootstrap";
-import { useSelector } from "react-redux";
-import styled from "styled-components";
+import { minutesToSeconds } from 'date-fns'
+import React, { useState } from 'react'
+import { Container, Modal } from 'react-bootstrap'
+import { useSelector } from 'react-redux'
+import styled from 'styled-components'
 const ViewWithDrawalDetails = () => {
-  const [state, setstate] = useState(false);
-  const { singleUserVerifedDetails } = useSelector((state) => state.profile);
+  const [state, setstate] = useState(false)
+  const { singleUserVerifedDetails } = useSelector((state) => state.profile)
 
-  const { method, name, email, amount, total, methodDetails } =
-    singleUserVerifedDetails;
+  const {
+    method,
+    name,
+    email,
+    amount,
+    total,
+    methodDetails,
+  } = singleUserVerifedDetails
 
   return (
     <>
       <a
         className="text primary"
         onClick={() => setstate(true)}
-        style={{ color: "blue" }}
-        href="#!"
+        style={{ color: 'blue' }}
       >
         View Details
       </a>
@@ -24,15 +29,15 @@ const ViewWithDrawalDetails = () => {
         <Modal show={state} aria-labelledby="contained-modal-title-vcenter">
           <Modal.Header closeButton onHide={() => setstate(false)}>
             <h6 className="text-capitalize text-center">
-              {method === "Cryptocurrency"
-                ? "Crypto Transfer"
-                : "Card Bearer Details"}
+              {method === 'Cryptocurrency'
+                ? 'Crypto Transfer'
+                : 'Card Bearer Details'}
             </h6>
           </Modal.Header>
           <Modal.Body>
             <Container fluid>
               <TextHeader>
-                {method && method === "Cryptocurrency" ? (
+                {method && method === 'Cryptocurrency' ? (
                   methodDetails.map((mtn) => (
                     <div>
                       <div className="text-container">
@@ -77,10 +82,10 @@ const ViewWithDrawalDetails = () => {
         </Modal>
       ) : null}
     </>
-  );
-};
+  )
+}
 
-export default ViewWithDrawalDetails;
+export default ViewWithDrawalDetails
 
 const TextHeader = styled.div`
   .text-container {
@@ -92,4 +97,4 @@ const TextHeader = styled.div`
     font-weight: 300;
     font-size: 1rem;
   }
-`;
+`

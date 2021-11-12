@@ -15,8 +15,6 @@ function LeaderBoard() {
   const sortedTrades = trades && trades.sort(compare);
   useEffect(() => {
     get_all_auto_trades();
-
-    // eslint-disable-next-line
   }, []);
   function random() {
     const flagArray = [
@@ -49,7 +47,7 @@ function LeaderBoard() {
             sortedTrades.map((sorted) => (
               <div key={sorted._id}>
                 <div className="leaderboardDiv">
-                  <img src={random()} alt="random flag" />
+                  <img src={random()} />
                 </div>
                 <span style={{ display: "block" }}>{sorted.userName}</span>
                 <span>Profit Percent:</span> <b>{sorted.profitPercentage}</b>

@@ -11,7 +11,6 @@ const EditAutoCopyTrade = ({ children, id, callback }) => {
   const [amount, setamount] = useState(0);
   const [assets, setassets] = useState("");
   const [scheduledTime, setscheduledTime] = useState("");
-  // eslint-disable-next-line
   const [checkDate, setcheckDate] = useState(false);
   const [loading, setLoading] = useState(false);
   const [btnLoading, setBtnLoading] = useState(false);
@@ -188,10 +187,10 @@ const EditAutoCopyTrade = ({ children, id, callback }) => {
                       label="Now"
                       id="default-radio"
                       name="time"
-                      onChange={(e) => {
-                        setcheckDate(e.target.checked);
-                        setscheduledTime(e.target.checked ? new Date() : null);
-                      }}
+                      onChange={(e) => (
+                        setcheckDate(e.target.checked),
+                        setscheduledTime(e.target.checked ? new Date() : null)
+                      )}
                     />
                   </Col>
                 </Row>

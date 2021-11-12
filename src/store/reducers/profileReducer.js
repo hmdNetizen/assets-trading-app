@@ -60,7 +60,6 @@ export default function profileReducer(state = initialState, action) {
       const sing = newDeposits.find(
         (dep) => dep._id === action.payload.approveDeposit._id
       );
-      // eslint-disable-next-line
       const single = newsINGLEDeposits.find((depo) => {
         if (depo._id === action.payload.approveDeposit._id) {
           return (single.status = action.payload.approveDeposit.status);
@@ -81,7 +80,6 @@ export default function profileReducer(state = initialState, action) {
       const singW = newWithdraw.find(
         (dep) => dep._id === action.payload.approvedWithdraw._id
       );
-      // eslint-disable-next-line
       const singleW = newsINGLEWithdraw.find((depo) => {
         if (depo._id === action.payload.approvedWithdraw._id) {
           return (singleW.status = action.payload.approvedWithdraw.status);
@@ -103,7 +101,6 @@ export default function profileReducer(state = initialState, action) {
         (dep) => dep._id === action.payload.declinedWithdraw._id
       );
       singWs.status = action.payload.declinedWithdraw.status;
-      // eslint-disable-next-line
       const singles = newsINGLEWithdraws.find((depo) => {
         if (depo._id === action.payload.declinedWithdraw._id) {
           return (singles.status = action.payload.declinedWithdraw.status);
@@ -124,7 +121,6 @@ export default function profileReducer(state = initialState, action) {
         (dep) => dep._id === action.payload.declinedDeposite._id
       );
       decline.status = action.payload.declinedDeposite.status;
-      // eslint-disable-next-line
       const singlewith = newsINGLEDeposit.find((depos) => {
         if (depos._id === action.payload.declinedDeposite._id) {
           return (singlewith.status = action.payload.declinedDeposite.status);
@@ -329,7 +325,6 @@ export default function profileReducer(state = initialState, action) {
       };
     case actionTypes.MANAGER_APPROVE_VERIFY:
       const newVerify = state.allVerifiedUsers;
-      // eslint-disable-next-line
       newVerify.map((single) => {
         if (single.userId === action.payload) {
           return (single.status = "Approved");
@@ -343,7 +338,6 @@ export default function profileReducer(state = initialState, action) {
       };
     case actionTypes.MANAGER_DECLINE_VERIFY:
       const newDeclineVerify = state.allVerifiedUsers;
-      // eslint-disable-next-line
       newDeclineVerify.map((single) => {
         if (single.userId === action.payload) {
           return (single.status = "Declined");

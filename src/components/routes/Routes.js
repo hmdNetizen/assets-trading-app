@@ -1,5 +1,6 @@
 import { useState, useLayoutEffect } from "react";
 import { Switch, Route } from "react-router-dom";
+import Homepage from "../pages/Homepage";
 import Login from "../pages/Login";
 import Register from "../pages/Register";
 import Header from "../layouts/Header";

@@ -1,3 +1,4 @@
+import { Fragment } from "react";
 import PropTypes from "prop-types";
 import { useSelector } from "react-redux";
 import { useActions } from "../hooks/useActions";
@@ -22,9 +23,11 @@ const Orders = (props) => {
   const { buysell, setBuysell } = props;
 
   const { user } = useSelector((state) => state.auth);
-  const { openTrades } = useSelector((state) => state.profile);
-  const { loading, userTrades, error } = useSelector((state) => state.trades);
+  const { userTrades, userMargin, openTrades, error, loading } = useSelector(
+    (state) => state.profile
+  );
   const { allStockAssets } = useSelector((state) => state.stock);
+  const { activeTrade } = useSelector((state) => state.profile);
   const { webData } = useSelector((state) => state.web);
 
   const {
@@ -184,12 +187,8 @@ const Orders = (props) => {
                                 className="rise"
                                 style={
                                   item.tag === "buy"
-                                    ? {
-                                        color: "#54ac40",
-                                      }
-                                    : {
-                                        color: "red",
-                                      }
+                                    ? { color: "#54ac40" }
+                                    : { color: "red" }
                                 }
                               >
                                 {item.tag}
@@ -270,9 +269,7 @@ const Orders = (props) => {
                               >
                                 <button
                                   className="orderBtn btn-green"
-                                  style={{
-                                    marginRight: 20,
-                                  }}
+                                  style={{ marginRight: 20 }}
                                 >
                                   {item.isOpen ? "Open" : "closed"}
                                 </button>

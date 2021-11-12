@@ -1,4 +1,4 @@
-import React from "react";
+import React, { Fragment } from "react";
 import "./SwitchButton.css";
 import { useActions } from "../hooks/useActions";
 import { useSelector } from "react-redux";

@@ -5,6 +5,8 @@ import { useActions } from "../hooks/useActions";
 import Ibox from "../utils/Ibox";
 import { message } from "antd";
 import Spinner from "../utils/Spinner";
+import FormControlLabel from "@mui/material/FormControlLabel";
+import Radio from "@mui/material/Radio";
 
 const ForexBoxContents = ({
   selectedStock,
@@ -64,8 +66,6 @@ const ForexBoxContents = ({
     getCommodityStocks();
     getInvestorsExchange();
     getExchangeTradedFund();
-
-    // eslint-disable-next-line
   }, []);
 
   const spinnerStyle = {
@@ -301,7 +301,6 @@ const ForexBoxContents = ({
               {selectedStock === 0 &&
                 allStockAssets.length > 0 &&
                 allStockAssets
-                  // eslint-disable-next-line
                   .filter((stock) => {
                     if (!filterText) {
                       return stock;

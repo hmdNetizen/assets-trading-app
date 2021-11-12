@@ -1,5 +1,6 @@
 import PropTypes from "prop-types";
 import { Button } from "react-bootstrap";
+import { message as messageAnt } from "antd";
 // import { UploadOutlined } from "@ant-design/icons";
 
 const CryptoStepFour = ({
@@ -8,6 +9,24 @@ const CryptoStepFour = ({
   handleSubmitDeposit,
   setCryptoDepositProof,
 }) => {
+  // const properties = {
+  //   name: "file",
+  //   action: "",
+  //   headers: {
+  //     authorization: "authorization-text",
+  //   },
+  //   onChange(info) {
+  //     if (info.file.status !== "uploading") {
+  //       console.log(info.file, info.fileList);
+  //     }
+  //     if (info.file.status === "done") {
+  //       messageAnt.success(`${info.file.name} file uploaded successfully`);
+  //     } else if (info.file.status === "error") {
+  //       messageAnt.error(`${info.file.name} file upload failed.`);
+  //     }
+  //   },
+  // };
+
   const handleCryptoDepositProof = (e) => {
     e.preventDefault();
     if (e) {

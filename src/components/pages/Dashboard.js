@@ -4,6 +4,7 @@ import { useActions } from "../hooks/useActions";
 import DashboardAside from "../layouts/DashboardAside";
 import DashboardHeader from "../layouts/DashboardHeader";
 import { Redirect } from "react-router-dom";
+import { message } from "antd";
 import "./Dashboard.css";
 import Board from "./Board";
 import Manager from "./Manager";
@@ -17,32 +18,75 @@ import Finaces from "./Finaces";
 import Calculator from "../layouts/Calculator";
 import News from "../pages/News";
 import LeaderBoard from "./LeaderBoard";
-// import useInterval from "./../hooks/useInterval";
+import useInterval from "./../hooks/useInterval";
 
 const Dashboard = () => {
   const [selectedTab, setSelectedTab] = useState(0);
   const [adminSelected, setAdminSelected] = useState(false);
   const [managerSelected, setManagerSelected] = useState(false);
+  const [view, setView] = useState({});
+  const [totalUp, setTotalUp] = useState(0);
   const [levIsh, setLevIsh] = useState(false);
+  const [orders, setOrders] = useState([]);
   const [buysell, setBuysell] = useState(false);
   const [support, setSupport] = useState(false);
 
   const myRef3 = useRef("");
 
   // Action creators
-  const { getWebData, getAllAssets, getDefaultAsset } = useActions();
+  const {
+    getWebData,
+    setIsTrading,
+    getAllAssets,
+    getDefaultAsset,
+    getCryptoAssets,
+    getForexStocks,
+    getInvestorsExchange,
+    setCurrentSelectedStock,
+    getAllUserTrades,
+  } = useActions();
 
   // Redux state data
   const { webData } = useSelector((state) => state.web);
 
-  const { isAuthenticated } = useSelector((state) => state.auth);
+  const { isAuthenticated, user } = useSelector((state) => state.auth);
+  const { currentSelectedStock } = useSelector((state) => state.stock);
+  const { loading } = useSelector((state) => state.profile);
+
+  const closeSetlevIsh = () => {
+    if (!user.liveTrade) {
+      message.warning("Live trade turned off. Contact admin");
+    } else setLevIsh(false);
+  };
+
+  const handleBuyStock = () => {
+    if (user && user.isTrading) {
+      message.warning(
+        `AutoCopy Trader is Active, Turn off AutoCopy Trader to trade manually`
+      );
+    } else if (user && user.wallet <= 0) {
+      message.warning(`You do not have enough money in your wallet`);
+    }
+  };
+
+  const handleTrading = (e) => {
+    if (user && user.isTrading) {
+      message.success(`AutoCopy Trader Disabling...`);
+    } else {
+      message.success(`AutoCopy Trader Enabling...`);
+    }
+
+    setIsTrading({ id: user._id, isTrading: !user.isTrading });
+
+    // getIsTrading(userId);
+
+    // setTimeout(() => window.location.reload(), 2000);
+  };
 
   useEffect(() => {
     getWebData();
     getDefaultAsset();
     getAllAssets();
-
-    // eslint-disable-next-line
   }, []);
 
   // useInterval(() => {
@@ -115,10 +159,15 @@ const Dashboard = () => {
 
           {selectedTab === 0 && (
             <Board
+              orders={orders}
+              view={view}
+              handleTrading={handleTrading}
               buysell={buysell}
               setBuysell={setBuysell}
+              setTotalUp={setTotalUp}
               levIsh={levIsh}
               setLevIsh={setLevIsh}
+              closeSetlevIsh={closeSetlevIsh}
               data={webData}
             />
           )}
@@ -141,7 +190,7 @@ const Dashboard = () => {
               className="order-book-section orderBookComponent"
               style={{ display: "block" }}
             >
-              <OrderBook />
+              <OrderBook orders={orders} />
             </div>
           )}
 

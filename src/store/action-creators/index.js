@@ -6,4 +6,3 @@ export * as AdminActions from "./AdminActions/Admin";
 export * as stockActions from "./stockActions";
 export * as themeActions from "./themeActions";
 export * as marketActions from "./MarketAction";
-export * as tradeActions from "./tradeActions";

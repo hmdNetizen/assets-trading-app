@@ -1,14 +1,14 @@
-import React, { useState, useEffect } from "react";
+import React, {useState, useEffect} from 'react';
 import "./Mail.css";
-import { useSelector } from "react-redux";
-import { NavLink } from "react-router-dom";
-import { message } from "antd";
-import { useActions } from "../hooks/useActions";
-import axios from "axios";
-import getToken from "../../store/utils/gettoken";
+import { useSelector } from 'react-redux';
+import { NavLink } from 'react-router-dom';
+import { message } from 'antd';
+import { useActions } from '../hooks/useActions';
+import axios from 'axios';
+import getToken from '../../store/utils/gettoken';
 function Payment() {
-  const { adminData } = useSelector((state) => state.adminInfo);
-  const { get_admin_data } = useActions();
+  const { adminData} = useSelector(state=> state.adminInfo); 
+  const {change_admin_data, get_admin_data} = useActions();
   const [paymentSuccessText, setpaymentSuccessText] = useState("");
   const [paymentRefPattern, setpaymentRefPattern] = useState("");
   const [paymentMinDeposit, setPaymentMinDeposit] = useState("");
@@ -51,55 +51,53 @@ function Payment() {
       setbtcAddress(adminData.btcAddress);
       setbuyBTCLink(adminData.buyBTCLink);
     }
-
-    // eslint-disable-next-line
   }, []);
 
-  const url =
-    "https://trade-backend-daari.ondigitalocean.app/api/site/paymentsettings";
-  const onSaved = () => {
-    setLoading(true);
+  const url = "https://trade-backend-daari.ondigitalocean.app/api/site/paymentsettings";
+  const onSaved = ()=>{
+    setLoading(true)
     axios
       .put(url, dataAll, getToken())
-      .then((res) => {
-        setLoading(false);
+      .then(res=> {
+        setLoading(false)
         message.success("Data Updated Successfully");
-        get_admin_data();
+        get_admin_data()
       })
-      .catch((err) => {
-        message.error("Error occured while updataing");
-      });
-  };
-  return (
-    <div>
-      <div>
+      .catch(err=>{
+        message.error("Error occured while updataing")
+      })
+  }
+    return (
+        <div>        
+        <div>
         <div
           className="public-card"
           style={{ paddingLeft: 0, paddingRight: 0 }}
         >
           <div className="dash-row dash-row-centralized payment-integration">
             <div className="platform">
-              <img
-                src="https://www.pngfind.com/pngs/m/328-3281030_mastercard-logo-png-mastercard-png-transparent-png.png"
-                alt="Logo"
-              />
+              <img src="https://www.pngfind.com/pngs/m/328-3281030_mastercard-logo-png-mastercard-png-transparent-png.png" />
             </div>
             <div className="subscription">
-              {/* <a
+              <a
                 className="icon mdi mdi-information-outline"
                 href="https://help.ovrley.com/help-center/articles/6/fortumo"
                 target="_blank" rel="noreferrer"
-
-              />{" "} */}
+              />{" "}
               <span className="font-size-13 text-fade">
-                This payment gateway is only available for subscription system
+                This payment gateway is only available for
+                subscription system
               </span>
             </div>
             <div className="action">
               {masterCardStatus === true ? (
-                <span className="enabled text-uppercase">Enabled</span>
+                <span className="enabled text-uppercase">
+                  Enabled
+                </span>
               ) : (
-                <span className="disabled text-uppercase">Disabled</span>
+                <span className="disabled text-uppercase">
+                  Disabled
+                </span>
               )}
 
               <NavLink to="/dashboard/admin/mastercard" className="configure">
@@ -112,25 +110,28 @@ function Payment() {
               <img
                 style={{ width: "50%" }}
                 src="https://upload.wikimedia.org/wikipedia/commons/thumb/4/46/Bitcoin.svg/1200px-Bitcoin.svg.png"
-                alt="Bitcoin Logo"
               />
             </div>
             <div className="subscription">
-              {/* <a
+              <a
                 className="icon mdi mdi-information-outline"
                 href="https://help.ovrley.com/help-center/articles/6/fortumo"
                 target="_blank"
-                rel="noreferrer"
-              />{" "} */}
+              />{" "}
               <span className="font-size-13 text-fade">
-                This payment gateway is only available for subscription system
+                This payment gateway is only available for
+                subscription system
               </span>
             </div>
             <div className="action">
               {bitCoinStatus === true ? (
-                <span className="enabled text-uppercase">Enabled</span>
+                <span className="enabled text-uppercase">
+                  Enabled
+                </span>
               ) : (
-                <span className="disabled text-uppercase">Disabled</span>
+                <span className="disabled text-uppercase">
+                  Disabled
+                </span>
               )}
               <NavLink to="/dashboard/admin/bitcoin" className="configure">
                 Configure
@@ -146,7 +147,9 @@ function Payment() {
             <div className="actions">
               <input
                 value={paymentSuccessText}
-                onChange={(e) => setpaymentSuccessText(e.target.value)}
+                onChange={(e) =>
+                  setpaymentSuccessText(e.target.value)
+                }
                 className="dash-input"
                 type="text"
                 name="text"
@@ -193,7 +196,9 @@ function Payment() {
                 type="number"
                 name="text"
                 value={paymentMinWithdraw}
-                onChange={(e) => setPaymentMinWithdraw(e.target.value)}
+                onChange={(e) =>
+                  setPaymentMinWithdraw(e.target.value)
+                }
               />
             </div>
           </div>
@@ -207,7 +212,9 @@ function Payment() {
                 type="number"
                 name="text"
                 value={paymentMaxWithdraw}
-                onChange={(e) => setPaymentMaxWithdraw(e.target.value)}
+                onChange={(e) =>
+                  setPaymentMaxWithdraw(e.target.value)
+                }
               />
             </div>
           </div>
@@ -241,9 +248,13 @@ function Payment() {
                   name="approved-payment"
                   defaultValue="yes"
                   onChange={(e) =>
-                    setpaymentNeedsApproval(e.target.checked ? true : false)
+                    setpaymentNeedsApproval(
+                      e.target.checked ? true : false
+                    )
                   }
-                  checked={paymentNeedsApproval === true ? true : false}
+                  checked={
+                    paymentNeedsApproval === true ? true : false
+                  }
                 />
                 <label htmlFor="approved-payment-one">ON</label>
                 <input
@@ -252,9 +263,13 @@ function Payment() {
                   name="approved-payment"
                   defaultValue="no"
                   onChange={(e) =>
-                    setpaymentNeedsApproval(e.target.checked ? false : true)
+                    setpaymentNeedsApproval(
+                      e.target.checked ? false : true
+                    )
                   }
-                  checked={paymentNeedsApproval === false ? true : false}
+                  checked={
+                    paymentNeedsApproval === false ? true : false
+                  }
                 />
                 <label htmlFor="approved-payment-two">OFF</label>
               </div>
@@ -262,11 +277,12 @@ function Payment() {
           </div>
         </div>
         <div className="save-btn">
-          <button onClick={onSaved}>{loading ? "Saving..." : "Save"}</button>
+             <button onClick={onSaved}>{loading ? "Saving...":"Save"}</button> 
         </div>
       </div>
-    </div>
-  );
+
+        </div>    
+    )
 }
 
-export default Payment;
+export default Payment

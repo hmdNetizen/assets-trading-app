@@ -27,9 +27,11 @@ import Support from "../utils/modals/Support";
 import WithdrawalSettings from "../utils/modals/withdrawal/WithdrawalSettings";
 import BankPaymentForm from "../utils/modals/withdrawal/BankPaymentForm";
 import CryptoPaymentForm from "../utils/modals/withdrawal/CryptoPaymentForm";
+// import AutoTrade from "../utils/modals/AutoTrade";
 import { useActions } from "../hooks/useActions";
 import Withdrawals from "../utils/modals/withdrawal/Withdrawals";
 import CryptoStepSix from "../utils/modals/deposit/crypto-steps/CryptoStepSix";
+import { tradesMargin } from "./../../helpers/getOpenTradesMargin";
 import { getUserBalance } from "../../helpers/getUserBalance";
 import { getActiveTradeMargin } from "./../../helpers/getActiveTradeMargin";
 
@@ -185,15 +187,9 @@ const DashboardHeader = ({ support, setSupport, data }) => {
               >
                 <h6
                   className="mb-1"
-                  style={{
-                    color: isDarkMode ? "#fff" : "#4c5268",
-                  }}
+                  style={{ color: isDarkMode ? "#fff" : "#4c5268" }}
                 >{`${user && user.name}`}</h6>
-                <p
-                  style={{
-                    color: isDarkMode ? "#fff" : "#777",
-                  }}
-                >
+                <p style={{ color: isDarkMode ? "#fff" : "#777" }}>
                   {user && user.email}
                 </p>
                 <div className="tour-wrapper">
@@ -214,34 +210,18 @@ const DashboardHeader = ({ support, setSupport, data }) => {
                 <br />
                 <div className="date-wrapper d-flex justify-content-between">
                   <div>
-                    <span
-                      style={{
-                        color: isDarkMode ? "#fff" : "#777",
-                      }}
-                    >
+                    <span style={{ color: isDarkMode ? "#fff" : "#777" }}>
                       Date Registered
                     </span>
-                    <p
-                      style={{
-                        color: isDarkMode ? "#fff" : "#4c5268",
-                      }}
-                    >
+                    <p style={{ color: isDarkMode ? "#fff" : "#4c5268" }}>
                       14 Feb 2021
                     </p>
                   </div>
                   <div>
-                    <span
-                      style={{
-                        color: isDarkMode ? "#fff" : "#777",
-                      }}
-                    >
+                    <span style={{ color: isDarkMode ? "#fff" : "#777" }}>
                       User ID
                     </span>
-                    <p
-                      style={{
-                        color: isDarkMode ? "#fff" : "#4c5268",
-                      }}
-                    >
+                    <p style={{ color: isDarkMode ? "#fff" : "#4c5268" }}>
                       93220945
                     </p>
                   </div>
@@ -372,51 +352,29 @@ const DashboardHeader = ({ support, setSupport, data }) => {
               >
                 <h6
                   className="mb-1"
-                  style={{
-                    color: isDarkMode ? "#fff" : "#4c5268",
-                  }}
+                  style={{ color: isDarkMode ? "#fff" : "#4c5268" }}
                 >
                   {user && user.first_name}
                 </h6>
-                <p
-                  style={{
-                    color: isDarkMode ? "#fff" : "#777",
-                  }}
-                >
+                <p style={{ color: isDarkMode ? "#fff" : "#777" }}>
                   {user && user.email}
                 </p>
                 <NavDropdown.Divider className="mt-3" />
                 <br />
                 <div className="date-wrapper d-flex justify-content-between">
                   <div>
-                    <span
-                      style={{
-                        color: isDarkMode ? "#fff" : "#777",
-                      }}
-                    >
+                    <span style={{ color: isDarkMode ? "#fff" : "#777" }}>
                       Date Registered
                     </span>
-                    <p
-                      style={{
-                        color: isDarkMode ? "#fff" : "#4c5268",
-                      }}
-                    >
+                    <p style={{ color: isDarkMode ? "#fff" : "#4c5268" }}>
                       14 Feb 2021
                     </p>
                   </div>
                   <div>
-                    <span
-                      style={{
-                        color: isDarkMode ? "#fff" : "#777",
-                      }}
-                    >
+                    <span style={{ color: isDarkMode ? "#fff" : "#777" }}>
                       User ID
                     </span>
-                    <p
-                      style={{
-                        color: isDarkMode ? "#fff" : "#4c5268",
-                      }}
-                    >
+                    <p style={{ color: isDarkMode ? "#fff" : "#4c5268" }}>
                       93220945
                     </p>
                   </div>
@@ -433,19 +391,13 @@ const DashboardHeader = ({ support, setSupport, data }) => {
                   <div>
                     <h6
                       className="pl-2"
-                      style={{
-                        color: isDarkMode ? "#fff" : "#4c5268",
-                      }}
+                      style={{ color: isDarkMode ? "#fff" : "#4c5268" }}
                     >
                       MY BALANCES
                     </h6>
                   </div>
                   <div>
-                    <p
-                      style={{
-                        color: isDarkMode ? "#fff" : "#4c5268",
-                      }}
-                    >
+                    <p style={{ color: isDarkMode ? "#fff" : "#4c5268" }}>
                       Always show the "Total" amount
                     </p>
                   </div>
@@ -456,11 +408,7 @@ const DashboardHeader = ({ support, setSupport, data }) => {
                   }`}
                 >
                   <div>
-                    <h6
-                      style={{
-                        color: isDarkMode ? "#fff" : "#4c5268",
-                      }}
-                    >
+                    <h6 style={{ color: isDarkMode ? "#fff" : "#4c5268" }}>
                       REAL ACCOUNT
                     </h6>
                     <p className="amount mb-0">
@@ -492,17 +440,9 @@ const DashboardHeader = ({ support, setSupport, data }) => {
                   }`}
                 >
                   <div>
-                    <h6
-                      style={{
-                        color: isDarkMode ? "#fff" : "#4c5268",
-                      }}
-                    >
+                    <h6 style={{ color: isDarkMode ? "#fff" : "#4c5268" }}>
                       Total ACCOUNT{" "}
-                      <span
-                        style={{
-                          color: isDarkMode ? "#fff" : "#4c5268",
-                        }}
-                      >
+                      <span style={{ color: isDarkMode ? "#fff" : "#4c5268" }}>
                         <span>{user && user.currency.sign}</span>={" "}
                         <span className="balance">
                           {new Intl.NumberFormat("en-US")
@@ -513,9 +453,7 @@ const DashboardHeader = ({ support, setSupport, data }) => {
                     </h6>
                     <p
                       className="amount mb-0"
-                      style={{
-                        color: isDarkMode ? "#fff" : "#4c5268",
-                      }}
+                      style={{ color: isDarkMode ? "#fff" : "#4c5268" }}
                     >
                       {user && user.currency.sign}
                       {new Intl.NumberFormat("en-US")
@@ -643,7 +581,7 @@ const DashboardHeader = ({ support, setSupport, data }) => {
 };
 
 DashboardHeader.propTypes = {
-  data: PropTypes.object,
+  data: PropTypes.object.isRequired,
   support: PropTypes.bool.isRequired,
   setSupport: PropTypes.func.isRequired,
 };

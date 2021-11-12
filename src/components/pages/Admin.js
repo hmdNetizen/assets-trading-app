@@ -1,10 +1,10 @@
 import AdminSidebar from "../layouts/AdminAside";
-import { useLocation } from "react-router-dom";
+import { useLocation, useParams } from "react-router-dom";
 import { useState, useEffect } from "react";
 import AutoTrading from "../layouts/Auto-Trading";
 import AdminDashboard from "../layouts/AdminDashboard";
-import GeneralAppearance from "../layouts/General_appearance";
-import GeneralSetting from "../layouts/General_setting";
+import General_appearance from "../layouts/General_appearance";
+import General_setting from "../layouts/General_setting";
 import Mail from "../layouts/Mail";
 import Template from "../layouts/Template";
 import Payment from "../layouts/Payment";
@@ -20,18 +20,16 @@ import { useActions } from "../hooks/useActions";
 import MasterCard from "../layouts/MasterCard";
 import Bitcoin from "../layouts/Bitcoin.js";
 
-const Admin = () => {
+const Admin = (props) => {
   const location = useLocation();
   const { get_admin_data } = useActions();
   const pathname = location.pathname.slice(10);
+  const { allUsers } = props;
   const [url, setUrl] = useState("");
 
   useEffect(() => {
     get_admin_data();
-
-    // eslint-disable-next-line
   }, []);
-
   useEffect(() => {
     setUrl(pathname);
   }, [pathname]);
@@ -45,10 +43,10 @@ const Admin = () => {
         return <AutoTrading />;
 
       case "/admin/general_settings":
-        return <GeneralSetting />;
+        return <General_setting />;
 
       case "/admin/general_appearance":
-        return <GeneralAppearance />;
+        return <General_appearance />;
 
       case "/admin/mail":
         return <Mail />;

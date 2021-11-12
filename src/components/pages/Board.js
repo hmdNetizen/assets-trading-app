@@ -8,7 +8,8 @@ import BuyStockModal from "../utils/modals/trading/BuyStock";
 import { message } from "antd";
 import { useActions } from "../hooks/useActions";
 import SellStockModal from "../utils/modals/trading/SellStock";
-import { getPandL } from "../../helpers/getProfitOrLoss";
+import useInterval from "../hooks/useInterval";
+import { getProfitOrLoss, getPandL } from "../../helpers/getProfitOrLoss";
 import { getAssetRate, getAssetInfo } from "../../helpers/getAssetDetails";
 
 const Board = (props) => {
@@ -150,7 +151,6 @@ const Board = (props) => {
                       autosize
                       locale="en"
                       toolbar_bg="#f1f3f6"
-                      // eslint-disable-next-line
                       style="3"
                       range="1D"
                       enable_publishing={false}

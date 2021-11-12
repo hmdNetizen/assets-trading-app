@@ -9,7 +9,7 @@ const Notification = () => {
 
   return (
     <div className="notification alarm-notification">
-      <a href="#!">
+      <a href="#">
         <BsBell
           size={25}
           color={isDarkMode ? "#fff" : "#171b29"}
