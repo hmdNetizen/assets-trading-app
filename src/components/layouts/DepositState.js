@@ -1,23 +1,25 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState } from "react";
 
 function DepositState({ status }) {
-  const [pendingState, set] = useState(status)
+  // eslint-disable-next-line
+  const [pendingState, set] = useState(status);
 
   return (
     <a
       className={
-        status === 'Declined' || status === 'Pending'
-          ? ' bg-danger text-light  text-center'
-          : 'bg-success text-light  text-center'
+        status === "Declined" || status === "Pending"
+          ? " bg-danger text-light  text-center"
+          : "bg-success text-light  text-center"
       }
+      href="#!"
     >
-      {status === 'Approved'
-        ? 'Approved'
-        : pendingState === 'Declined'
-        ? 'Declined'
-        : 'Pending'}
+      {status === "Approved"
+        ? "Approved"
+        : pendingState === "Declined"
+        ? "Declined"
+        : "Pending"}
     </a>
-  )
+  );
 }
 
-export default DepositState
+export default DepositState;

@@ -13,10 +13,8 @@ const initialState = {
   allOrders: [],
   allUsers: [],
   allDeposits: [],
-  allTrades: [],
   allVerifiedUsers: [],
   userAutoCopyTrade: [],
-  userTrades: [],
   activeTrade: {},
   userMargin: 1,
   singleUser: null, //made a change here
@@ -60,6 +58,7 @@ export default function profileReducer(state = initialState, action) {
       const sing = newDeposits.find(
         (dep) => dep._id === action.payload.approveDeposit._id
       );
+      // eslint-disable-next-line
       const single = newsINGLEDeposits.find((depo) => {
         if (depo._id === action.payload.approveDeposit._id) {
           return (single.status = action.payload.approveDeposit.status);
@@ -80,6 +79,7 @@ export default function profileReducer(state = initialState, action) {
       const singW = newWithdraw.find(
         (dep) => dep._id === action.payload.approvedWithdraw._id
       );
+      // eslint-disable-next-line
       const singleW = newsINGLEWithdraw.find((depo) => {
         if (depo._id === action.payload.approvedWithdraw._id) {
           return (singleW.status = action.payload.approvedWithdraw.status);
@@ -101,6 +101,7 @@ export default function profileReducer(state = initialState, action) {
         (dep) => dep._id === action.payload.declinedWithdraw._id
       );
       singWs.status = action.payload.declinedWithdraw.status;
+      // eslint-disable-next-line
       const singles = newsINGLEWithdraws.find((depo) => {
         if (depo._id === action.payload.declinedWithdraw._id) {
           return (singles.status = action.payload.declinedWithdraw.status);
@@ -121,6 +122,7 @@ export default function profileReducer(state = initialState, action) {
         (dep) => dep._id === action.payload.declinedDeposite._id
       );
       decline.status = action.payload.declinedDeposite.status;
+      // eslint-disable-next-line
       const singlewith = newsINGLEDeposit.find((depos) => {
         if (depos._id === action.payload.declinedDeposite._id) {
           return (singlewith.status = action.payload.declinedDeposite.status);
@@ -139,13 +141,12 @@ export default function profileReducer(state = initialState, action) {
         withdrawalAmount: action.payload,
         error: null,
       };
-    case actionTypes.UPDATE_PROFILE_SUCCESS:
-      return {
-        ...state,
-        // allUsers: [newAllUser],
-        singleUser: action.payload,
-        error: null,
-      };
+    // case actionTypes.UPDATE_PROFILE_SUCCESS:
+    //   return {
+    //     ...state,
+    //     singleUser: action.payload,
+    //     error: null,
+    //   };
 
     case actionTypes.GET_ALL_WITHDRAWALS:
       return {
@@ -325,6 +326,7 @@ export default function profileReducer(state = initialState, action) {
       };
     case actionTypes.MANAGER_APPROVE_VERIFY:
       const newVerify = state.allVerifiedUsers;
+      // eslint-disable-next-line
       newVerify.map((single) => {
         if (single.userId === action.payload) {
           return (single.status = "Approved");
@@ -338,6 +340,7 @@ export default function profileReducer(state = initialState, action) {
       };
     case actionTypes.MANAGER_DECLINE_VERIFY:
       const newDeclineVerify = state.allVerifiedUsers;
+      // eslint-disable-next-line
       newDeclineVerify.map((single) => {
         if (single.userId === action.payload) {
           return (single.status = "Declined");
@@ -354,14 +357,6 @@ export default function profileReducer(state = initialState, action) {
         ...state,
         loading: false,
         userAutoCopyTrade: action.payload,
-        error: null,
-      };
-    case actionTypes.GET_ALL_USER_TRADES:
-      return {
-        ...state,
-        loading: false,
-        userTrades: action.payload,
-        openTrades: state.userTrades.filter((trade) => trade.isOpen),
         error: null,
       };
     case actionTypes.CLEAR_OPEN_TRADES:

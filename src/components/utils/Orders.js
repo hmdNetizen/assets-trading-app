@@ -1,8 +1,6 @@
-import { Fragment } from "react";
 import PropTypes from "prop-types";
 import { useSelector } from "react-redux";
 import { useActions } from "../hooks/useActions";
-import useInterval from "../hooks/useInterval";
 import { message } from "antd";
 import "./Orders.css";
 import Spinner from "./Spinner";
@@ -23,11 +21,9 @@ const Orders = (props) => {
   const { buysell, setBuysell } = props;
 
   const { user } = useSelector((state) => state.auth);
-  const { userTrades, userMargin, openTrades, error, loading } = useSelector(
-    (state) => state.profile
-  );
+  const { openTrades } = useSelector((state) => state.profile);
+  const { loading, userTrades, error } = useSelector((state) => state.trades);
   const { allStockAssets } = useSelector((state) => state.stock);
-  const { activeTrade } = useSelector((state) => state.profile);
   const { webData } = useSelector((state) => state.web);
 
   const {
@@ -85,10 +81,6 @@ const Orders = (props) => {
     }, 7000);
   };
 
-  useInterval(() => {
-    !loading && getAllUserTrades(user && user._id);
-  }, 5000);
-
   const limitTradeList =
     userTrades.length > 7 ? userTrades.slice(0, 7) : userTrades;
 
@@ -102,7 +94,7 @@ const Orders = (props) => {
           className="text"
           onClick={() => {
             setBuysell((prev) => !prev);
-            getAllUserTrades(user && user._id);
+            getAllUserTrades();
           }}
         >
           Open positions
@@ -133,7 +125,13 @@ const Orders = (props) => {
           style={{ display: buysell ? "block" : "" }}
         >
           {loading ? (
-            <Spinner style={spinnerStyle} />
+            <Spinner
+              type="Rings"
+              color="#00BFFF"
+              height={100}
+              width={100}
+              style={spinnerStyle}
+            />
           ) : (
             <div
               className="tables tablesI"
@@ -165,7 +163,7 @@ const Orders = (props) => {
                         allStockAssets.length > 0 &&
                         allStockAssets
                           .filter((stock) => {
-                            if (item.nameOfAsset === stock.symbol) {
+                            if (item.id === stock.id) {
                               return true;
                             } else {
                               return false;
@@ -173,33 +171,39 @@ const Orders = (props) => {
                           })
                           .map((asset) => (
                             <tr key={item._id}>
-                              <td>{item.time.slice(0, 10)}</td>
+                              <td>{item.created_at.slice(0, 10)}</td>
                               <td>00{i + 1}</td>
-                              <td>{item.nameOfAsset}</td>
+                              {asset.sy}
+                              {/* <td>{setCurrentAsset(item.id).sy}</td> */}
                               <td>
                                 {user && user.currency.sign}
                                 {new Intl.NumberFormat("en-US").format(
-                                  item.margin
+                                  item.traded_amount
                                 )}
                               </td>
-                              <td>{item.stockAmount}</td>
+                              <td>{item.opening_price}</td>
                               <td
                                 className="rise"
                                 style={
-                                  item.tag === "buy"
-                                    ? { color: "#54ac40" }
-                                    : { color: "red" }
+                                  item.trade_type === "buy"
+                                    ? {
+                                        color: "#54ac40",
+                                      }
+                                    : {
+                                        color: "red",
+                                      }
                                 }
                               >
-                                {item.tag}
+                                {item.trade_type}
                               </td>
                               <td>
-                                {item.openRateOfAsset.toString().slice(0, 8)}
+                                {item.opening_price.toString().slice(0, 8)}
                               </td>
                               <td>
-                                {item.isOpen
-                                  ? asset.price.toString().slice(0, 8)
-                                  : "---"}
+                                {/* {item.isOpen
+                                  ? asset.rate.toString().slice(0, 8)
+                                : "---"} */}
+                                {asset.rate.toString().slice(0, 8)}
                               </td>
                               <td
                                 style={{
@@ -254,10 +258,7 @@ const Orders = (props) => {
                                 {new Intl.NumberFormat("en-US").format(
                                   item.profit.toString().slice(0, 6)
                                 )}
-                                /
-                                {new Intl.NumberFormat("en-US").format(
-                                  item.loss.toString().slice(0, 6)
-                                )}
+                                /{new Intl.NumberFormat("en-US").format(0)}
                               </td>
                               <td
                                 style={{
@@ -269,7 +270,9 @@ const Orders = (props) => {
                               >
                                 <button
                                   className="orderBtn btn-green"
-                                  style={{ marginRight: 20 }}
+                                  style={{
+                                    marginRight: 20,
+                                  }}
                                 >
                                   {item.isOpen ? "Open" : "closed"}
                                 </button>

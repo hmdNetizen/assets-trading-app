@@ -1,31 +1,30 @@
-import React, { useState } from 'react'
-import { useActions } from '../hooks/useActions'
-import { message } from 'antd'
+import React, { useState } from "react";
+import { useActions } from "../hooks/useActions";
+import { message } from "antd";
 
 const UserBalance = ({ singleUser, error }) => {
-  const { _id } = singleUser
-  const { singleUserBalance } = useActions()
+  const { _id } = singleUser;
+  const { singleUserBalance } = useActions();
   const [state, setstate] = useState({
-    pulseType: 'bonus',
+    pulseType: "bonus",
     profitLoss: false,
     amount: 0,
-  })
+  });
 
   const handleSubmit = async (e) => {
-    e.preventDefault()
+    e.preventDefault();
     if (error) {
-      message.error('Identity Approval Was Not Successful')
+      message.error("Identity Approval Was Not Successful");
     } else {
-      await singleUserBalance(_id, state)
+      await singleUserBalance(_id, state);
       setstate({
-        pulseType: '',
+        pulseType: "",
         profitLoss: false,
         amount: 0,
-      })
-      message.success('Successfully Approved')
+      });
+      message.success("Successfully Approved");
     }
-
-  }
+  };
 
   return (
     <>
@@ -34,9 +33,9 @@ const UserBalance = ({ singleUser, error }) => {
           <div
             className="public-card white-card mb-3"
             style={{
-              margin: '15px auto 0 auto',
-              maxWidth: '800px',
-              borderRadius: '6px',
+              margin: "15px auto 0 auto",
+              maxWidth: "800px",
+              borderRadius: "6px",
             }}
           >
             <div className="d-flex justify-content-center align-items-center py-4">
@@ -97,13 +96,9 @@ const UserBalance = ({ singleUser, error }) => {
             </div>
             <div
               className="d-flex justify-content-center p-2"
-              style={{ width: '50%', margin: 'auto' }}
+              style={{ width: "50%", margin: "auto" }}
             >
-              <button
-                type="submit"
-                className="btn btn-success w-75"
-                role="submit"
-              >
+              <button type="submit" className="btn btn-success w-75">
                 Save
               </button>
             </div>
@@ -111,7 +106,7 @@ const UserBalance = ({ singleUser, error }) => {
         </form>
       )}
     </>
-  )
-}
+  );
+};
 
-export default UserBalance
+export default UserBalance;

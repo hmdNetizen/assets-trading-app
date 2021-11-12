@@ -1,9 +1,5 @@
 import { RiBarChartBoxLine, RiHeartPulseLine } from "react-icons/ri";
-import {
-  IoHammerOutline,
-  IoPeopleOutline,
-  IoPlanetOutline,
-} from "react-icons/io5";
+import { IoHammerOutline, IoPeopleOutline } from "react-icons/io5";
 import { AiOutlineCalculator } from "react-icons/ai";
 import { FaMoneyCheckAlt, FaAward } from "react-icons/fa";
 export const asideList = [

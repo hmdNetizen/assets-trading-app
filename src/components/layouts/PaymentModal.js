@@ -1,9 +1,7 @@
-import React, { useState } from 'react'
+import React, { useState } from "react";
 
-import styled from 'styled-components'
-import { Container, Modal } from 'react-bootstrap'
-
-import { useActions } from '../hooks/useActions'
+import styled from "styled-components";
+import { Container, Modal } from "react-bootstrap";
 
 const PaymentModal = ({ method }) => {
   const {
@@ -15,15 +13,16 @@ const PaymentModal = ({ method }) => {
     cardNumber,
     cardYear,
     homeAddress,
-  } = method
+  } = method;
 
-  const [state, setstate] = useState(false)
+  const [state, setstate] = useState(false);
 
   return (
     <>
       <a
-        style={{ textDecoration: 'underline', color: 'blue' }}
+        style={{ textDecoration: "underline", color: "blue" }}
         onClick={() => setstate(true)}
+        href="#!"
       >
         view Details
       </a>
@@ -31,15 +30,15 @@ const PaymentModal = ({ method }) => {
         <Modal show={state} aria-labelledby="contained-modal-title-vcenter">
           <Modal.Header closeButton onHide={() => setstate(false)}>
             <h6 className="text-capitalize text-center">
-              {method.method === 'Cryptocurrency'
-                ? 'Crypto Transfer'
-                : 'Card Bearer Details'}
+              {method.method === "Cryptocurrency"
+                ? "Crypto Transfer"
+                : "Card Bearer Details"}
             </h6>
           </Modal.Header>
           <Modal.Body>
             <Container fluid>
               <TextHeader>
-                {method && method.method === 'Cryptocurrency' ? (
+                {method && method.method === "Cryptocurrency" ? (
                   <div>
                     <div className="text-container">
                       <h6 className="mr-auto">Name</h6>
@@ -85,9 +84,9 @@ const PaymentModal = ({ method }) => {
         </Modal>
       ) : null}
     </>
-  )
-}
-export default PaymentModal
+  );
+};
+export default PaymentModal;
 const TextHeader = styled.div`
   .text-container {
     display: flex;
@@ -98,4 +97,4 @@ const TextHeader = styled.div`
     font-weight: 300;
     font-size: 1rem;
   }
-`
+`;

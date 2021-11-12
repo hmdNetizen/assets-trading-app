@@ -1,8 +1,15 @@
 import Loader from "react-loader-spinner";
-const Spinner = ({ style }) => (
+
+const Spinner = ({ style, type, color, height, width }) => (
   <div style={style}>
-    <Loader type="Watch" color="#00BFFF" height={50} width={50} />
+    <Loader type={type} color={color} height={height} width={width} />
   </div>
 );
+
+Spinner.defaultProps = {
+  height: 25,
+  width: 25,
+  color: "#fff",
+};
 
 export default Spinner;

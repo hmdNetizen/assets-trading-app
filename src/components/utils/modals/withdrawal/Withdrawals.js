@@ -3,7 +3,6 @@ import { useActions } from "../../../hooks/useActions";
 import { useSelector } from "react-redux";
 import { message } from "antd";
 import PropTypes from "prop-types";
-import { tradesMargin } from "./../../../../helpers/getOpenTradesMargin";
 import { getActiveTradeMargin } from "./../../../../helpers/getActiveTradeMargin";
 import { getUserBalance } from "./../../../../helpers/getUserBalance";
 
@@ -64,6 +63,8 @@ const Withdrawals = ({ setWithdraw, country }) => {
   useEffect(() => {
     getBankPaymentMethod(user._id);
     getCryptoPaymentMethod(user._id);
+
+    // eslint-disable-next-line
   }, []);
 
   return (

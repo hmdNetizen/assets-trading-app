@@ -9,7 +9,6 @@ function EditTrade({ isOpen, id, toggle, trade, setisOpen }) {
   const [profitPercentage, setprofitPercentage] = useState("");
   const [subscriptionFee, setsubscriptionFee] = useState("");
   const { update_auto_trade, get_all_auto_trades } = useActions();
-  const [open, setOpen] = useState(false);
   const { specificTrade } = useSelector((state) => state.adminData);
   // useEffect(() => {
 
@@ -32,6 +31,8 @@ function EditTrade({ isOpen, id, toggle, trade, setisOpen }) {
   };
   useEffect(() => {
     getsingleTrade(id);
+
+    // eslint-disable-next-line
   }, []);
 
   const handleUpdate = (e) => {

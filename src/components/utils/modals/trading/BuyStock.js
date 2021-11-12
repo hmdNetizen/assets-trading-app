@@ -45,7 +45,7 @@ const BuyStockModal = (props) => {
     event.preventDefault();
     if (userMargin.toString().trim() === "" || parseFloat(userMargin) < 1) {
       message.error("Stock amount cannot be empty or zero");
-    } else if (userMargin > user.wallet) {
+    } else if (userMargin > user.balance) {
       message.error("You do not have enough money in your wallet");
     } else if (error) {
       message.error("Error processing your stock purchase");
@@ -112,13 +112,13 @@ const BuyStockModal = (props) => {
         <div className="split moved">
           <span>
             $
-            {
-              getAssetInfo(
-                stocksSelected,
-                defaultStockAsset,
-                currentSelectedStock
-              ).rate
-            }{" "}
+            {getAssetInfo(
+              stocksSelected,
+              defaultStockAsset,
+              currentSelectedStock
+            )
+              .rate.toString()
+              .slice(0, 8)}{" "}
           </span>
         </div>
       </div>
@@ -134,9 +134,16 @@ const BuyStockModal = (props) => {
               currentSelectedStock,
               parseFloat(userMargin),
               webData && webData.leverageAmount
-            )}{" "}
-            {getAssetInfo(stocksSelected, defaultStockAsset,
-            currentSelectedStock).sy}
+            )
+              .toString()
+              .slice(0, 8)}{" "}
+            {
+              getAssetInfo(
+                stocksSelected,
+                defaultStockAsset,
+                currentSelectedStock
+              ).sy
+            }
           </span>
         </div>
       </div>
@@ -263,7 +270,9 @@ const BuyStockModal = (props) => {
               currentSelectedStock,
               parseFloat(userMargin),
               webData && webData.leverageAmount
-            )}{" "}
+            )
+              .toString()
+              .slice(0, 8)}{" "}
             {
               getAssetInfo(
                 stocksSelected,

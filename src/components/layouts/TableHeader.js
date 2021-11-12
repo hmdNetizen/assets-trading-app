@@ -1,39 +1,40 @@
-import { format } from 'date-fns'
-import Moment from 'react-moment'
-import ChangeAutoTrade from './ChangeAutoTrade'
+import { format } from "date-fns";
+import Moment from "react-moment";
+import ChangeAutoTrade from "./ChangeAutoTrade";
 
 export const Columns = [
   {
-    Header: 'First Name',
-    accessor: 'name',
+    Header: "First Name",
+    accessor: "name",
   },
   {
-    Header: 'Last Name',
-    accessor: 'lastname',
-  },
-
-  {
-    Header: 'Email',
-    accessor: 'email',
-  },
-  {
-    Header: 'Phone Number',
-    accessor: 'phoneNumber',
+    Header: "Last Name",
+    accessor: "lastname",
   },
 
   {
-    Header: 'Balance',
-    accessor: 'wallet',
+    Header: "Email",
+    accessor: "email",
   },
   {
-    id: 'autoTrade',
-    Header: 'Auto Trade',
+    Header: "Phone Number",
+    accessor: "phoneNumber",
+  },
+
+  {
+    Header: "Balance",
+    accessor: "wallet",
+  },
+  {
+    id: "autoTrade",
+    Header: "Auto Trade",
     accessor: (autoTrade) => <ChangeAutoTrade autoTrade={autoTrade} />,
   },
   {
-    id: 'updatedAt',
-    Header: 'Time',
-    accessor: 'time',
+    id: "updatedAt",
+    Header: "Time",
+    accessor: "time",
+    // eslint-disable-next-line
     accessor: (d) => (
       <Moment fromNow ago>
         {d}
@@ -41,14 +42,14 @@ export const Columns = [
     ),
   },
   {
-    Header: 'Currency',
-    accessor: 'currency',
+    Header: "Currency",
+    accessor: "currency",
   },
   {
-    Header: 'Last Login',
-    accessor: 'time',
+    Header: "Last Login",
+    accessor: "time",
     Cell: ({ value }) => {
-      return format(new Date(value), 'dd/MM/yyyy')
+      return format(new Date(value), "dd/MM/yyyy");
     },
   },
-]
+];

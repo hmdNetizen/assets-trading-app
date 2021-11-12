@@ -21,19 +21,19 @@ import {
   GearFill,
   BoxArrowDownRight,
 } from "react-bootstrap-icons";
+import { IoKey } from "react-icons/io5";
 import CreditModalContents from "../utils/modals/deposit/CreditModalContents";
 import PersonalData from "../utils/modals/PersonalData";
 import Support from "../utils/modals/Support";
 import WithdrawalSettings from "../utils/modals/withdrawal/WithdrawalSettings";
 import BankPaymentForm from "../utils/modals/withdrawal/BankPaymentForm";
 import CryptoPaymentForm from "../utils/modals/withdrawal/CryptoPaymentForm";
-// import AutoTrade from "../utils/modals/AutoTrade";
 import { useActions } from "../hooks/useActions";
 import Withdrawals from "../utils/modals/withdrawal/Withdrawals";
 import CryptoStepSix from "../utils/modals/deposit/crypto-steps/CryptoStepSix";
-import { tradesMargin } from "./../../helpers/getOpenTradesMargin";
 import { getUserBalance } from "../../helpers/getUserBalance";
 import { getActiveTradeMargin } from "./../../helpers/getActiveTradeMargin";
+import ChangePassword from "../utils/modals/ChangePassword";
 
 const DashboardHeader = ({ support, setSupport, data }) => {
   const history = useHistory();
@@ -47,6 +47,7 @@ const DashboardHeader = ({ support, setSupport, data }) => {
   const [selectedStock, setSelectedStock] = useState(1);
   const [personalData, setPersonalData] = useState(false);
   const [withdraw, setWithdraw] = useState(false);
+  const [changePassword, setChangePassword] = useState(false);
   const [withdrawalSettings, setWithdrawalSettings] = useState(false);
   const [bankTransferSelected, setBankTransferSelected] = useState(false);
   const [cryptoCurrencySelected, setCryptoCurrencySelected] = useState(false);
@@ -187,9 +188,15 @@ const DashboardHeader = ({ support, setSupport, data }) => {
               >
                 <h6
                   className="mb-1"
-                  style={{ color: isDarkMode ? "#fff" : "#4c5268" }}
+                  style={{
+                    color: isDarkMode ? "#fff" : "#4c5268",
+                  }}
                 >{`${user && user.name}`}</h6>
-                <p style={{ color: isDarkMode ? "#fff" : "#777" }}>
+                <p
+                  style={{
+                    color: isDarkMode ? "#fff" : "#777",
+                  }}
+                >
                   {user && user.email}
                 </p>
                 <div className="tour-wrapper">
@@ -210,18 +217,34 @@ const DashboardHeader = ({ support, setSupport, data }) => {
                 <br />
                 <div className="date-wrapper d-flex justify-content-between">
                   <div>
-                    <span style={{ color: isDarkMode ? "#fff" : "#777" }}>
+                    <span
+                      style={{
+                        color: isDarkMode ? "#fff" : "#777",
+                      }}
+                    >
                       Date Registered
                     </span>
-                    <p style={{ color: isDarkMode ? "#fff" : "#4c5268" }}>
+                    <p
+                      style={{
+                        color: isDarkMode ? "#fff" : "#4c5268",
+                      }}
+                    >
                       14 Feb 2021
                     </p>
                   </div>
                   <div>
-                    <span style={{ color: isDarkMode ? "#fff" : "#777" }}>
+                    <span
+                      style={{
+                        color: isDarkMode ? "#fff" : "#777",
+                      }}
+                    >
                       User ID
                     </span>
-                    <p style={{ color: isDarkMode ? "#fff" : "#4c5268" }}>
+                    <p
+                      style={{
+                        color: isDarkMode ? "#fff" : "#4c5268",
+                      }}
+                    >
                       93220945
                     </p>
                   </div>
@@ -294,6 +317,19 @@ const DashboardHeader = ({ support, setSupport, data }) => {
                   />
                   Withdraw Settings
                 </NavDropdown.Item>
+                <NavDropdown.Item
+                  onClick={() => setChangePassword(true)}
+                  className={`${isDarkMode ? "nav--dark" : "nav--light"}`}
+                >
+                  <IoKey
+                    size={15}
+                    className={`mr-2 ${
+                      isDarkMode ? "nav--dark" : "nav--light"
+                    }`}
+                    // style={{ width: "6rem" }}
+                  />
+                  Change Password
+                </NavDropdown.Item>
                 <NavDropdown.Divider />
                 <NavDropdown.Item
                   onClick={() => setSupport(true)}
@@ -352,29 +388,51 @@ const DashboardHeader = ({ support, setSupport, data }) => {
               >
                 <h6
                   className="mb-1"
-                  style={{ color: isDarkMode ? "#fff" : "#4c5268" }}
+                  style={{
+                    color: isDarkMode ? "#fff" : "#4c5268",
+                  }}
                 >
                   {user && user.first_name}
                 </h6>
-                <p style={{ color: isDarkMode ? "#fff" : "#777" }}>
+                <p
+                  style={{
+                    color: isDarkMode ? "#fff" : "#777",
+                  }}
+                >
                   {user && user.email}
                 </p>
                 <NavDropdown.Divider className="mt-3" />
                 <br />
                 <div className="date-wrapper d-flex justify-content-between">
                   <div>
-                    <span style={{ color: isDarkMode ? "#fff" : "#777" }}>
+                    <span
+                      style={{
+                        color: isDarkMode ? "#fff" : "#777",
+                      }}
+                    >
                       Date Registered
                     </span>
-                    <p style={{ color: isDarkMode ? "#fff" : "#4c5268" }}>
+                    <p
+                      style={{
+                        color: isDarkMode ? "#fff" : "#4c5268",
+                      }}
+                    >
                       14 Feb 2021
                     </p>
                   </div>
                   <div>
-                    <span style={{ color: isDarkMode ? "#fff" : "#777" }}>
+                    <span
+                      style={{
+                        color: isDarkMode ? "#fff" : "#777",
+                      }}
+                    >
                       User ID
                     </span>
-                    <p style={{ color: isDarkMode ? "#fff" : "#4c5268" }}>
+                    <p
+                      style={{
+                        color: isDarkMode ? "#fff" : "#4c5268",
+                      }}
+                    >
                       93220945
                     </p>
                   </div>
@@ -391,13 +449,19 @@ const DashboardHeader = ({ support, setSupport, data }) => {
                   <div>
                     <h6
                       className="pl-2"
-                      style={{ color: isDarkMode ? "#fff" : "#4c5268" }}
+                      style={{
+                        color: isDarkMode ? "#fff" : "#4c5268",
+                      }}
                     >
                       MY BALANCES
                     </h6>
                   </div>
                   <div>
-                    <p style={{ color: isDarkMode ? "#fff" : "#4c5268" }}>
+                    <p
+                      style={{
+                        color: isDarkMode ? "#fff" : "#4c5268",
+                      }}
+                    >
                       Always show the "Total" amount
                     </p>
                   </div>
@@ -408,7 +472,11 @@ const DashboardHeader = ({ support, setSupport, data }) => {
                   }`}
                 >
                   <div>
-                    <h6 style={{ color: isDarkMode ? "#fff" : "#4c5268" }}>
+                    <h6
+                      style={{
+                        color: isDarkMode ? "#fff" : "#4c5268",
+                      }}
+                    >
                       REAL ACCOUNT
                     </h6>
                     <p className="amount mb-0">
@@ -440,9 +508,17 @@ const DashboardHeader = ({ support, setSupport, data }) => {
                   }`}
                 >
                   <div>
-                    <h6 style={{ color: isDarkMode ? "#fff" : "#4c5268" }}>
+                    <h6
+                      style={{
+                        color: isDarkMode ? "#fff" : "#4c5268",
+                      }}
+                    >
                       Total ACCOUNT{" "}
-                      <span style={{ color: isDarkMode ? "#fff" : "#4c5268" }}>
+                      <span
+                        style={{
+                          color: isDarkMode ? "#fff" : "#4c5268",
+                        }}
+                      >
                         <span>{user && user.currency.sign}</span>={" "}
                         <span className="balance">
                           {new Intl.NumberFormat("en-US")
@@ -453,7 +529,9 @@ const DashboardHeader = ({ support, setSupport, data }) => {
                     </h6>
                     <p
                       className="amount mb-0"
-                      style={{ color: isDarkMode ? "#fff" : "#4c5268" }}
+                      style={{
+                        color: isDarkMode ? "#fff" : "#4c5268",
+                      }}
                     >
                       {user && user.currency.sign}
                       {new Intl.NumberFormat("en-US")
@@ -507,6 +585,14 @@ const DashboardHeader = ({ support, setSupport, data }) => {
             style={{ display: "block" }}
           >
             <PersonalData web={data} setPersonalData={setPersonalData} />
+          </section>
+        )}
+        {changePassword && (
+          <section
+            className="withdraw-modal-box personal-data-modal"
+            style={{ display: "block" }}
+          >
+            <ChangePassword setChangePassword={setChangePassword} />
           </section>
         )}
         {support && (
@@ -581,7 +667,7 @@ const DashboardHeader = ({ support, setSupport, data }) => {
 };
 
 DashboardHeader.propTypes = {
-  data: PropTypes.object.isRequired,
+  data: PropTypes.object,
   support: PropTypes.bool.isRequired,
   setSupport: PropTypes.func.isRequired,
 };

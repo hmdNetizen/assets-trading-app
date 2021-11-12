@@ -1,20 +1,28 @@
-import React from 'react'
+import React from "react";
 import ethereum from "../../assets/images/ETH.svg";
 import litecoin from "../../assets/images/LTC.svg";
 import bitcoin from "../../assets/images/BTC.svg";
 import usd from "../../assets/images/USD.svg";
-import "./dasn.css"
+import "./dasn.css";
 function Calculator() {
-    return (
-        <div className="dashcontents calc_contain">        
-        <div className="calc-sections">
+  return (
+    <div className="dashcontents calc_contain">
+      <div className="calc-sections">
         <div className="heading">
-          <span style={{fontSize:"20px", letterSpacing:"1px", fontFamily:"arial"}}>CONVERTER</span>
+          <span
+            style={{
+              fontSize: "20px",
+              letterSpacing: "1px",
+              fontFamily: "arial",
+            }}
+          >
+            CONVERTER
+          </span>
         </div>
         <div className="calc" id="calcSort">
           <div className="dash-row dash-row-centralized calc-instrument">
             <div className="image">
-              <img src={ethereum} />
+              <img src={ethereum} alt="Ethereum logo" />
             </div>
             <div className="instrument">
               <span className="font-size-12">Ethereuem</span>
@@ -22,12 +30,7 @@ function Calculator() {
             <div className="input">
               <div className="dash-row dash-row-centralized">
                 <div className="input-field">
-                  <input
-                    type="text"
-                    name="input"
-                    id="input"
-                    defaultValue={1}
-                  />
+                  <input type="text" name="input" id="input" defaultValue={1} />
                 </div>
                 <div className="input-ins">
                   <span className="font-size-12">ETH</span>
@@ -37,7 +40,7 @@ function Calculator() {
           </div>
           <div className="dash-row dash-row-centralized calc-instrument">
             <div className="image">
-              <img src={litecoin} />
+              <img src={litecoin} alt="Litecoin logo" />
             </div>
             <div className="instrument">
               <span className="font-size-12">Litecoin</span>
@@ -45,12 +48,7 @@ function Calculator() {
             <div className="input">
               <div className="dash-row dash-row-centralized">
                 <div className="input-field">
-                  <input
-                    type="text"
-                    name="input"
-                    id="input"
-                    defaultValue={1}
-                  />
+                  <input type="text" name="input" id="input" defaultValue={1} />
                 </div>
                 <div className="input-ins">
                   <span className="font-size-12">LTC</span>
@@ -60,7 +58,7 @@ function Calculator() {
           </div>
           <div className="dash-row dash-row-centralized calc-instrument">
             <div className="image">
-              <img src={bitcoin} />
+              <img src={bitcoin} alt="Bitcoin logo" />
             </div>
             <div className="instrument">
               <span className="font-size-12">BITCOIN</span>
@@ -68,12 +66,7 @@ function Calculator() {
             <div className="input">
               <div className="dash-row dash-row-centralized">
                 <div className="input-field">
-                  <input
-                    type="text"
-                    name="input"
-                    id="input"
-                    defaultValue={1}
-                  />
+                  <input type="text" name="input" id="input" defaultValue={1} />
                 </div>
                 <div className="input-ins">
                   <span className="font-size-12">BIT</span>
@@ -83,7 +76,7 @@ function Calculator() {
           </div>
           <div className="dash-row dash-row-centralized calc-instrument">
             <div className="image">
-              <img src={usd} />
+              <img src={usd} alt="US Dollar logo" />
             </div>
             <div className="instrument">
               <span className="font-size-12">DOLLARS</span>
@@ -91,12 +84,7 @@ function Calculator() {
             <div className="input">
               <div className="dash-row dash-row-centralized">
                 <div className="input-field">
-                  <input
-                    type="text"
-                    name="input"
-                    id="input"
-                    defaultValue={1}
-                  />
+                  <input type="text" name="input" id="input" defaultValue={1} />
                 </div>
                 <div className="input-ins">
                   <span className="font-size-12">USD</span>
@@ -111,9 +99,8 @@ function Calculator() {
           </div>
         </center>
       </div>
-      </div>
-          );
-    
+    </div>
+  );
 }
 
-export default Calculator
+export default Calculator;

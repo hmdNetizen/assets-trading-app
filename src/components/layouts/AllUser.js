@@ -1,25 +1,20 @@
-import React, { useState } from 'react'
-import { useSelector } from 'react-redux'
-import { Container, Modal, Form, Button } from 'react-bootstrap'
+import React, { useState } from "react";
+import { useSelector } from "react-redux";
+import { Container, Modal, Button } from "react-bootstrap";
 export const AllUser = () => {
-  const { singleUserVerifedDetails } = useSelector((state) => state.profile)
-  const [drivestate, setDriveState] = useState(false)
-  const [passortState, setpassortState] = useState(false)
-  const [proofState, setproofState] = useState(false)
-  const {
-    name,
-    Img,
-    documentName,
-    documentFile,
-    proofDocument,
-  } = singleUserVerifedDetails
+  const { singleUserVerifedDetails } = useSelector((state) => state.profile);
+  const [drivestate, setDriveState] = useState(false);
+  const [passortState, setpassortState] = useState(false);
+  const [proofState, setproofState] = useState(false);
+  const { name, Img, documentName, documentFile, proofDocument } =
+    singleUserVerifedDetails;
 
   return (
     <>
       {singleUserVerifedDetails && (
         <div>
           <div
-            style={{ width: '400px' }}
+            style={{ width: "400px" }}
             className="d-flex justify-content-center align-items-center"
           >
             <div className="rounded mr-1 " onClick={() => setDriveState(true)}>
@@ -46,14 +41,14 @@ export const AllUser = () => {
               aria-labelledby="contained-modal-title-vcenter"
             >
               <Modal.Header closeButton onHide={() => setDriveState(false)}>
-                {documentName ? documentName : 'FILE TO BE UPLOADED'}
+                {documentName ? documentName : "FILE TO BE UPLOADED"}
               </Modal.Header>
               <Modal.Body>
-                <Container fluid style={{ width: ' 90%' }}>
+                <Container fluid style={{ width: " 90%" }}>
                   <img
                     src={documentFile}
                     alt={documentName}
-                    style={{ width: '95%', height: '200px' }}
+                    style={{ width: "95%", height: "200px" }}
                   />
                 </Container>
               </Modal.Body>
@@ -80,11 +75,11 @@ export const AllUser = () => {
                 <h6 className="text-capitalize text-center">ID card</h6>
               </Modal.Header>
               <Modal.Body>
-                <Container fluid style={{ width: ' 90%' }}>
+                <Container fluid style={{ width: " 90%" }}>
                   <img
                     src={Img}
                     alt={name}
-                    style={{ width: '95%', height: '200px' }}
+                    style={{ width: "95%", height: "200px" }}
                   />
                 </Container>
               </Modal.Body>
@@ -108,15 +103,15 @@ export const AllUser = () => {
             >
               <Modal.Header closeButton onHide={() => setproofState(false)}>
                 <h6 className="text-capitalize text-center">
-                  {proofDocument ? 'PROOF DOCUMENT' : 'Document'}
+                  {proofDocument ? "PROOF DOCUMENT" : "Document"}
                 </h6>
               </Modal.Header>
               <Modal.Body>
-                <Container fluid style={{ width: ' 90%' }}>
+                <Container fluid style={{ width: " 90%" }}>
                   <img
                     src={proofDocument}
                     alt={name}
-                    style={{ width: '95%', height: '200px' }}
+                    style={{ width: "95%", height: "200px" }}
                   />
                 </Container>
               </Modal.Body>
@@ -135,6 +130,6 @@ export const AllUser = () => {
         </div>
       )}
     </>
-  )
-}
-export default React.memo(AllUser)
+  );
+};
+export default React.memo(AllUser);

@@ -8,7 +8,8 @@ import {
   AdminActions,
   stockActions,
   themeActions,
-  marketActions
+  marketActions,
+  tradeActions,
 } from "../../store/action-creators";
 
 export const useActions = () => {
@@ -23,7 +24,8 @@ export const useActions = () => {
       ...AdminActions,
       ...stockActions,
       ...themeActions,
-      ...marketActions
+      ...marketActions,
+      ...tradeActions,
     },
     dispatch
   );

@@ -10,7 +10,6 @@ import { store } from "./store";
 import ScrollToView from "./components/utils/ScrollToView";
 
 function App() {
-  const { user } = useSelector((state) => state.auth);
   const { webData } = useSelector((state) => state.web);
 
   const { loadUser, getWebData } = useActions();
@@ -25,6 +24,8 @@ function App() {
     window.addEventListener("storage", () => {
       if (!localStorage.token) store.dispatch({ type: LOGOUT });
     });
+
+    // eslint-disable-next-line
   }, []);
 
   useEffect(() => {
@@ -36,6 +37,8 @@ function App() {
       fav.href = webData && webData.siteFav;
     }
     title.innerHTML = webData && webData.siteTitle;
+
+    // eslint-disable-next-line
   }, []);
 
   return (

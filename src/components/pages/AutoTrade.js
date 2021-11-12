@@ -3,10 +3,9 @@ import { useSelector } from "react-redux";
 import { useActions } from "../hooks/useActions";
 import { Row, Col, Button, Form, Spinner } from "react-bootstrap";
 import { Card, message } from "antd";
-import { userDetails, userId } from "../../store/utils/getUserDetails";
 import axios from "axios";
 function AutoTrade() {
-  const { user, userId } = useSelector((state) => state.auth);
+  const { user } = useSelector((state) => state.auth);
   const idArray = user ? user.subcriptionPlan : null;
   const { loading, trades } = useSelector((state) => state.adminData);
   const [singleTrade, setSingleTrade] = useState({});
@@ -16,6 +15,8 @@ function AutoTrade() {
   const { get_all_auto_trades } = useActions();
   useEffect(() => {
     get_all_auto_trades();
+
+    // eslint-disable-next-line
   }, []);
   const subscribeTrade = (id) => {
     axios
@@ -104,10 +105,10 @@ function AutoTrade() {
                 Subscribe Now to Auto Copy our Top Performing Traders
               </h4>
             </div>
-            <Row style={{ marginBottom: "10%", marginLeft:'10%' }}>
+            <Row style={{ marginBottom: "10%", marginLeft: "10%" }}>
               {trades.map((data, index) => (
                 <Col md={6} className="mt-3" key={index}>
-                  <Card className="card_style" style={{padding:'75px'}}>
+                  <Card className="card_style" style={{ padding: "75px" }}>
                     <p>Username: {data.userName}</p>
                     <p>Profit % = {data.profitPercentage}%</p>
                     <p>
@@ -174,7 +175,6 @@ function AutoTrade() {
                         <div>
                           <Button
                             style={{}}
-                            onClick=""
                             variant="primary"
                             className="mb-4"
                             disabled={!isAgree}

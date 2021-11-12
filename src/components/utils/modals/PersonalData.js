@@ -10,48 +10,46 @@ const PersonalData = ({ web, setPersonalData }) => {
   const { user } = useSelector((state) => state.auth);
   const { error } = useSelector((state) => state.profile);
 
-  const { updateProfile } = useActions();
+  const { updateUserProfile } = useActions();
 
   const [formData, setFormData] = useState({
-    name: "",
-    lastname: "",
-    email: "",
-    phoneNumber: "",
+    firstName: "",
+    lastName: "",
     country: "",
     currency: "",
-    yourPassword: "",
-    yourPasswordConfirm: "",
+    city: "",
+    address: "",
+    permanentAddress: "",
   });
 
   const {
-    name,
-    lastname,
-    email,
-    phoneNumber,
+    firstName,
+    lastName,
     country,
+    city,
     currency,
-    yourPassword,
-    yourPasswordConfirm,
+    address,
+    permanentAddress,
   } = formData;
 
   const handleUpdateProfile = () => {
-    if (yourPassword !== yourPasswordConfirm) {
-      message.error("Password must match");
+    if (!firstName || !lastName) {
+      message.error("First Name or Last Name cannot be empty");
       return;
-    } else if (error) {
+    }
+    if (error) {
       message.error("problems updating profile");
       return;
     }
 
-    updateProfile({
-      id: user._id,
-      name,
-      lastname,
-      email,
-      phoneNumber,
+    updateUserProfile({
+      first_name: firstName,
+      last_name: lastName,
       country,
-      currency,
-      password: yourPassword,
+      cur: currency,
+      address,
+      city,
+      permanent_address: permanentAddress,
     });
 
     message.success("Profile was successfully updated");
@@ -65,12 +63,13 @@ const PersonalData = ({ web, setPersonalData }) => {
   useEffect(() => {
     if (user) {
       setFormData({
-        name: user.name ? user.name : "",
-        lastname: user.lastname ? user.lastname : "",
-        email: user.email ? user.email : "",
-        currency: user.currency ? user.currency : "",
+        firstName: user.first_name ? user.first_name : "",
+        lastName: user.last_name ? user.last_name : "",
+        currency: user.cur ? user.cur : "",
         country: user.country ? user.country : "",
-        phoneNumber: user.phoneNumber ? user.phoneNumber : "",
+        city: user.city ? user.city : "",
+        address: user.address ? user.address : "",
+        permanent_address: user.permanent_address ? user.permanent_address : "",
       });
     }
   }, [user]);
@@ -87,9 +86,9 @@ const PersonalData = ({ web, setPersonalData }) => {
                   <Form.Control
                     type="text"
                     placeholder="Your First Name"
-                    name="name"
-                    id="name"
-                    defaultValue={name}
+                    name="firstName"
+                    id="firstName"
+                    defaultValue={firstName}
                     onChange={handleUserInfo}
                   />
                 </Form.Group>
@@ -100,9 +99,9 @@ const PersonalData = ({ web, setPersonalData }) => {
                   <Form.Control
                     type="text"
                     placeholder="Your Last Name"
-                    name="lastname"
-                    id="lastname"
-                    value={lastname}
+                    name="lastName"
+                    id="lastName"
+                    value={lastName}
                     onChange={handleUserInfo}
                   />
                 </Form.Group>
@@ -112,11 +111,11 @@ const PersonalData = ({ web, setPersonalData }) => {
               <Col xs={12} md={6}>
                 <Form.Group>
                   <Form.Control
-                    type="email"
-                    placeholder="Your Email Address"
-                    name="email"
-                    id="email"
-                    value={email}
+                    type="text"
+                    placeholder="Your Address"
+                    name="address"
+                    id="address"
+                    value={address}
                     onChange={handleUserInfo}
                   />
                 </Form.Group>
@@ -124,12 +123,12 @@ const PersonalData = ({ web, setPersonalData }) => {
               <Col xs={12} md={6}>
                 <Form.Group>
                   <Form.Control
-                    value={phoneNumber}
+                    value={city}
                     onChange={handleUserInfo}
-                    type="number"
-                    placeholder="phone number"
-                    name="phoneNumber"
-                    id="phoneNumber"
+                    type="text"
+                    placeholder="City"
+                    name="city"
+                    id="city"
                   />
                 </Form.Group>
               </Col>
@@ -161,9 +160,9 @@ const PersonalData = ({ web, setPersonalData }) => {
                   >
                     <option value="$">Select Currency</option>
 
-                    <option value="$">USD</option>
-                    <option value="€">EUR</option>
-                    <option value="£">GBP</option>
+                    <option value="USD">USD</option>
+                    <option value="EUR">EUR</option>
+                    <option value="GBP">GBP</option>
                   </Form.Control>
                 </Form.Group>
               </Col>
@@ -172,24 +171,12 @@ const PersonalData = ({ web, setPersonalData }) => {
               <Col xs={12} md={6}>
                 <Form.Group>
                   <Form.Control
-                    value={yourPassword}
+                    value={permanentAddress}
                     onChange={handleUserInfo}
-                    type="password"
-                    placeholder="Your New Password"
-                    name="yourPassword"
-                    id="yourPassword"
-                  />
-                </Form.Group>
-              </Col>
-              <Col xs={12} md={6}>
-                <Form.Group>
-                  <Form.Control
-                    value={yourPasswordConfirm}
-                    onChange={handleUserInfo}
-                    type="password"
-                    placeholder="Repeat New Password"
-                    name="yourPasswordConfirm"
-                    id="yourPasswordConfirm"
+                    type="text"
+                    placeholder="Permananent Address"
+                    name="permanentAddress"
+                    id="permanentAddress"
                   />
                 </Form.Group>
               </Col>

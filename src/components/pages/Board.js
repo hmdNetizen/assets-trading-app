@@ -8,8 +8,7 @@ import BuyStockModal from "../utils/modals/trading/BuyStock";
 import { message } from "antd";
 import { useActions } from "../hooks/useActions";
 import SellStockModal from "../utils/modals/trading/SellStock";
-import useInterval from "../hooks/useInterval";
-import { getProfitOrLoss, getPandL } from "../../helpers/getProfitOrLoss";
+import { getPandL } from "../../helpers/getProfitOrLoss";
 import { getAssetRate, getAssetInfo } from "../../helpers/getAssetDetails";
 
 const Board = (props) => {
@@ -58,19 +57,24 @@ const Board = (props) => {
   //   }
   // };
 
+  // const handleOpenBuyStock = () => {
+  //   if (user && user.autoTrade) {
+  //     message.warning(
+  //       `AutoCopy Trader is Active, Turn off AutoCopy Trader to trade manually`
+  //     );
+  //   } else if (user && (user.wallet <= 0 || userMargin > user.wallet)) {
+  //     message.warning(`You need to make a deposit to buy the stock`);
+  //   } else if (user && !user.liveTrade) {
+  //     message.warning("Live Trade is turned off. Contact Admin");
+  //   } else {
+  //     setBuyStock(true);
+  //     setSellStock(false);
+  //   }
+  // };
+
   const handleOpenBuyStock = () => {
-    if (user && user.autoTrade) {
-      message.warning(
-        `AutoCopy Trader is Active, Turn off AutoCopy Trader to trade manually`
-      );
-    } else if (user && (user.wallet <= 0 || userMargin > user.wallet)) {
-      message.warning(`You need to make a deposit to buy the stock`);
-    } else if (user && !user.liveTrade) {
-      message.warning("Live Trade is turned off. Contact Admin");
-    } else {
-      setBuyStock(true);
-      setSellStock(false);
-    }
+    setBuyStock(true);
+    setSellStock(false);
   };
 
   const handleOpenSellStock = () => {
@@ -145,14 +149,15 @@ const Board = (props) => {
                       symbol={
                         !loading && Object.keys(currentSelectedStock).length > 0
                           ? currentSelectedStock.sy
-                          : defaultStockAsset.sy
+                          : "BTCUSD"
                       }
                       theme={Themes.DARK}
                       autosize
                       locale="en"
                       toolbar_bg="#f1f3f6"
+                      // eslint-disable-next-line
                       style="3"
-                      range="1D"
+                      // range="1d"
                       enable_publishing={false}
                       hide_side_toolbar={false}
                       allow_symbol_change={true}

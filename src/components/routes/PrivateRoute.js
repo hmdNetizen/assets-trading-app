@@ -18,7 +18,7 @@ const PrivateRoute = ({ component: Component, ...rest }) => {
       {...rest}
       render={(props) =>
         loading ? (
-          <Spinner style={spinnerStyle} />
+          <Spinner type="Watch" style={spinnerStyle} color="#00BFFF" height={50} width={50} />
         ) : isAuthenticated ? (
           <Component {...props} />
         ) : (

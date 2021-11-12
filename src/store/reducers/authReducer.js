@@ -1,25 +1,22 @@
 import * as actionTypes from "../action-types";
 
 const initialState = {
-  loading: false,
+  loading: true,
   token: localStorage.getItem("token"),
   user: null,
-  // userId: localStorage.getItem("userId"),
   isAuthenticated: localStorage.getItem("isAuthenticated"),
   error: "",
   authError: null,
+  isRequestLoading: false,
+  requestError: null,
+  successMsg: "",
 };
 export function authReducer(state = initialState, action) {
   switch (action.type) {
-    case actionTypes.GET_CREDENTIALS:
-    case actionTypes.GET_USER:
+    case actionTypes.API_CALL_STARTED:
       return {
         ...state,
-        loading: true,
-        user: null,
-        token: null,
-        isAutheticated: false,
-        authError: null,
+        isRequestLoading: true,
       };
     case actionTypes.USER_LOADED:
       localStorage.setItem("isAuthenticated", true);
@@ -46,24 +43,41 @@ export function authReducer(state = initialState, action) {
         isAuthenticated: false,
         error: "You can login now",
       };
+    case actionTypes.UPDATE_USER_PROFILE:
+      return {
+        ...state,
+        loading: false,
+        user: action.payload,
+        error: "",
+        authError: null,
+        isRequestLoading: false,
+        requestError: null,
+      };
+
+    case actionTypes.CHANGE_PASSWORD:
+      return {
+        ...state,
+        isRequestLoading: false,
+        successMsg: "Password Changed Successfully",
+        requestError: null,
+      };
 
     case actionTypes.LOGIN_FAILED:
     case actionTypes.REGISTER_FAILED:
-    case actionTypes.SET_ERROR:
+    case actionTypes.AUTH_ERROR:
       localStorage.removeItem("token");
       localStorage.removeItem("isAuthenticated");
       return {
         ...state,
         loading: false,
         isAuthenticated: false,
-        authError: action.payload,
+        authError: "Something went wrong",
         error: "",
         token: null,
         user: null,
       };
     case actionTypes.LOGOUT:
       localStorage.removeItem("token");
-      // localStorage.removeItem("userId");
       localStorage.removeItem("isAuthenticated");
       return {
         ...state,
@@ -72,6 +86,14 @@ export function authReducer(state = initialState, action) {
         isAuthenticated: null,
         authError: null,
         error: "",
+      };
+    case actionTypes.REQUEST_ERROR:
+      return {
+        ...state,
+        loading: false,
+        isRequestLoading: false,
+        requestError: action.payload,
+        successMsg: "",
       };
     default:
       return state;

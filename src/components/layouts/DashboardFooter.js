@@ -9,13 +9,13 @@ import { getPandL } from "../../helpers/getProfitOrLoss";
 import { tradesMargin } from "./../../helpers/getOpenTradesMargin";
 import { getUserBalance } from "./../../helpers/getUserBalance";
 import { getActiveTradeMargin } from "./../../helpers/getActiveTradeMargin";
-import useInterval from "../hooks/useInterval";
 
 const DashboardFooter = ({ setSupport }) => {
   const { user } = useSelector((state) => state.auth);
   const { openTrades, activeTrade } = useSelector((state) => state.profile);
   const { webData } = useSelector((state) => state.web);
   const { allStockAssets } = useSelector((state) => state.stock);
+  // eslint-disable-next-line
   const [timer, setTimer] = useState(new Date());
 
   const profitOrLoss = getPandL(

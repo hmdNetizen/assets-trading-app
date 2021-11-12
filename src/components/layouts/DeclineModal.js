@@ -1,15 +1,10 @@
-import React, { useState } from 'react'
-import styled from 'styled-components'
-import { Container, Modal, Form, Button } from 'react-bootstrap'
-import { message } from 'antd'
-import { useSelector } from 'react-redux'
-import { useActions } from '../hooks/useActions'
+import React, { useState } from "react";
+import styled from "styled-components";
+import { Container, Modal, Form, Button } from "react-bootstrap";
 
 const DeclineModal = ({ modalstate, status, handledeclineVerify }) => {
-  const [declinedMessage, setDeclinedMessage] = useState('')
-  const { ManagerdeclineVerify } = useActions()
-  const { error } = useSelector((state) => state.profile)
-  const [state, setstate] = useState(modalstate)
+  const [declinedMessage, setDeclinedMessage] = useState("");
+  const [state, setstate] = useState(modalstate);
 
   // const handledecline = async () => {
   //   if (error) {
@@ -27,9 +22,9 @@ const DeclineModal = ({ modalstate, status, handledeclineVerify }) => {
   //     message.success('Identity Was Successfully Declined')
   //   }
   // }
-  console.log(state)
+  console.log(state);
   if (!state) {
-    return null
+    return null;
   } else if (state) {
     return (
       <>
@@ -43,7 +38,7 @@ const DeclineModal = ({ modalstate, status, handledeclineVerify }) => {
             <Container fluid>
               <Form className="text-left">
                 <Form.Group controlId="exampleForm.ControlTextarea1">
-                  <Form.Label className="py-4" style={{ color: '#fff' }}>
+                  <Form.Label className="py-4" style={{ color: "#fff" }}>
                     Write below the reason for rejection
                   </Form.Label>
                   <Form.Control
@@ -70,14 +65,14 @@ const DeclineModal = ({ modalstate, status, handledeclineVerify }) => {
           </Modal.Body>
         </Modal>
       </>
-    )
+    );
   }
-}
+};
 
-export default React.memo(DeclineModal)
+export default React.memo(DeclineModal);
 
 const ModalHeader = styled.div`
 display: 'flex',
 justifyContent: 'center',
 alignItems: 'center',
-`
+`;

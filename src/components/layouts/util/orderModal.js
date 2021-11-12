@@ -1,8 +1,6 @@
 import React, { useState } from "react";
 import styled from "styled-components";
 import { Container, Modal, Form, Button } from "react-bootstrap";
-import { message } from "antd";
-import { useSelector } from "react-redux";
 import axios from "axios";
 import { useEffect } from "react";
 import { useActions } from "../../hooks/useActions";
@@ -21,8 +19,6 @@ const UpdateOrderModals = ({ modalstate, setModalState, id, ordersObject }) => {
     takeLoss: "",
     stockAmount: "",
   });
-
-  const { error } = useSelector((state) => state.profile);
 
   const handleChange = (e) => {
     e.preventDefault();
@@ -43,7 +39,6 @@ const UpdateOrderModals = ({ modalstate, setModalState, id, ordersObject }) => {
 
         setModalState(() => false);
         window.location.reload();
-
       })
       .catch((err) =>
         err.response === undefined ? false : console.error(err.response.data)
@@ -170,7 +165,7 @@ const UpdateOrderModals = ({ modalstate, setModalState, id, ordersObject }) => {
               </Form.Group>
 
               <Form.Group>
-              <p style={{ color: "black" }}>Add Margin</p>
+                <p style={{ color: "black" }}>Add Margin</p>
 
                 <Form.Control
                   value={margin}
