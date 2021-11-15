@@ -5,10 +5,20 @@ import { BASE_URL_SECURED } from "../action-creators";
 
 // "https://trade-backend-daari.ondigitalocean.app/api/registration/login"
 
+const checkConnection = () => {
+  if (navigator.onLine) {
+    return true;
+  } else {
+    return false;
+  }
+};
+
 export const loadUser = () => async (dispatch) => {
   if (localStorage.token) {
     setAuthToken(localStorage.token);
   }
+
+  if (!checkConnection()) return;
 
   try {
     const { data } = await axios.get(`${BASE_URL_SECURED}/api/user`);

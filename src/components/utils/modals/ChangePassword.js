@@ -60,7 +60,7 @@ const ChangePassword = ({ setChangePassword }) => {
               <Col xs={12}>
                 <Form.Group>
                   <Form.Control
-                    type="text"
+                    type="password"
                     placeholder="Current password"
                     name="currentPassword"
                     id="currentPassword"
@@ -74,7 +74,7 @@ const ChangePassword = ({ setChangePassword }) => {
               <Col xs={12}>
                 <Form.Group>
                   <Form.Control
-                    type="text"
+                    type="password"
                     placeholder="New Password"
                     name="newPassword"
                     id="newPassword"

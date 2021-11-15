@@ -49,6 +49,8 @@ const BuyStockModal = (props) => {
     event.preventDefault();
     if (userMargin.toString().trim() === "" || parseFloat(userMargin) < 1) {
       message.error("Stock amount cannot be empty or zero");
+    } else if (userMargin > user.balance) {
+      message.error("You do not have enough money in your wallet");
     } else if (error) {
       message.error("Error processing your stock purchase");
     } else {
